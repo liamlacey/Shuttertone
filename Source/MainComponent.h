@@ -25,17 +25,29 @@ public:
     MainContentComponent();
     ~MainContentComponent();
 
+    //=========================================
+    //GUI stuff...
+    
     void paint (Graphics&);
     void resized();
     
     void buttonClicked (Button *button);
+    
+    //=========================================
+    //Backend stuff...
 
 private:
     //==============================================================================
     
-    ScopedPointer<MidiOutput> midiOutputDevice;
+    //=========================================
+    //GUI stuff...
+    ScopedPointer <TextButton> playButton;
+    Image image;
+    ScopedPointer <ImageComponent> imageComponent;
     
-    ScopedPointer<TextButton> playButton;
+    //=========================================
+    //Backend stuff...
+    ScopedPointer<MidiOutput> midiOutputDevice;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

@@ -20,6 +20,12 @@ MainContentComponent::MainContentComponent()
     else
         std::cout << "Failed to create a virtual MIDI output device!" << std::endl;
     
+    
+    image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/2-tree-and-sunset.jpg"));
+    addAndMakeVisible(imageComponent = new ImageComponent());
+    imageComponent->setImage (image);
+    
+    
     addAndMakeVisible(playButton = new TextButton());
     playButton->setClickingTogglesState(true);
     playButton->setButtonText("Play");
@@ -40,6 +46,7 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
+    imageComponent->setBounds(0, 0, getWidth(), getHeight() - 60);
     playButton->setBounds((getWidth()/2) - 50, getHeight() - 50, 100, 40);
 }
 
