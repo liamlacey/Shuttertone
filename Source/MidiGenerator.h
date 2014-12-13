@@ -41,7 +41,7 @@ enum SequencerLayers
     LAYER_PERC
 };
 
-#define SEQ_MAX_NUM_OF_STEPS 16
+#define SEQ_MAX_NUM_OF_STEPS 32 //keep this as a division of four please!
 #define SEQ_MAX_NUM_OF_NOTES 512
 #define SIZE_OF_NOTE_OFF_BUF 64
 

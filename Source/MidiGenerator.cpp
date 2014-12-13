@@ -203,6 +203,7 @@ void MidiGenerator::setSequenceData()
     
     //==================================================================================
     //Add notes to drum sequence
+    //Drum patterns are apply from the pallete of patterns in Scale&Patterns.h
     
     int noteSeqIndex = 0; //this needs to be iterated after everytime we add a note, so we store the next note in a new index
     
@@ -258,7 +259,31 @@ void MidiGenerator::setSequenceData()
             noteSeqIndex++;
         }
     
+    } //for (int step = 0; step < DRUM_PATTERN_LENGTH; step++)
+    
+    
+    //==================================================================================
+    //Add notes to pad sequence
+    //Chord are applied in a pattern of four, depend on the chosen chord progression and chosen scale.
+    //The step numbers of the four notes depends on the max number of steps.
+    
+    //note numbers applied here are the global root note + the index of the chosen scale relating to the values of the chosen chord progression.
+    
+    //TODO: implement chord density and chord intervals
+    
+    int chord_length = SEQ_MAX_NUM_OF_STEPS / CHORD_PROG_LENGTH;
+    noteSeqIndex = 0; //this needs to be iterated after everytime we add a note, so we store the next note in a new index
+    
+    for (int div = 0; div < CHORD_PROG_LENGTH; div++)
+    {
+        noteSequence[LAYER_PAD][noteSeqIndex].note_step_num = div * chord_length;
+        noteSequence[LAYER_PAD][noteSeqIndex].note_chan = SEQ_PAD_CHAN;
+        noteSequence[LAYER_PAD][noteSeqIndex].note_num = global_root_note + Scales::scale[global_scale_to_use][Scales::chordProgression[pads_chord_prog_to_use][div]];
+        noteSequence[LAYER_PAD][noteSeqIndex].note_vel = pads_main_velocity;
+        noteSequence[LAYER_PAD][noteSeqIndex].note_length = chord_length; //FIXME: set this as pads_note_length
+        noteSeqIndex++;
     }
+    
  
 }
 

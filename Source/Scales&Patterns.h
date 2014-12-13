@@ -15,6 +15,7 @@
 #define NUM_OF_CHORD_PROGRESSIONS 24
 #define NUM_OF_DRUM_PATTERNS 15
 #define DRUM_PATTERN_LENGTH 16
+#define CHORD_PROG_LENGTH 4
 
 namespace Scales
 {
@@ -41,7 +42,7 @@ namespace Scales
     //First index is progression number, second index is note index number.
     //I haven't put these in any type of order - What order could I put them in?
     //These progressions are used to determine the pads and bass note order/pattern.
-    const int chordProgression[NUM_OF_CHORD_PROGRESSIONS][4] =
+    const int chordProgression[NUM_OF_CHORD_PROGRESSIONS][CHORD_PROG_LENGTH] =
     {
         {1,4,5,5},
         {1,2,5,5},
