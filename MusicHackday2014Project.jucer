@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="bmERS7" name="MusicHackday2014Project" projectType="guiapp"
+              version="0.0.1" bundleIdentifier="com.yourcompany.MusicHackday2014Project"
+              includeBinaryInAppConfig="1" jucerVersion="3.1.0">
+  <MAINGROUP id="z7sSgT" name="MusicHackday2014Project">
+    <GROUP id="{B75A2A8B-CAE3-714B-5151-23A779C661CF}" name="Source">
+      <FILE id="cT4IlU" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="pSUZg1" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="RJJHp8" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="10.10 SDK" osxCompatibility="10.10 SDK"
+                       osxArchitecture="32BitUniversal" isDebug="1" optimisation="1"
+                       targetName="MusicHackday2014Project"/>
+        <CONFIGURATION name="Release" osxSDK="10.10 SDK" osxCompatibility="10.10 SDK"
+                       osxArchitecture="64BitUniversal" isDebug="0" optimisation="2"
+                       targetName="MusicHackday2014Project" linkTimeOptimisation="1"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../Development/libs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../Development/libs/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_video" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
