@@ -276,20 +276,55 @@ void MidiGenerator::setSequenceData()
     
     //note numbers applied here are the global root note + the index of the chosen scale relating to the values of the chosen chord progression.
     
-    //TODO: implement chord density and chord intervals
+    //TODO: and note lengths
     
     int chord_length = SEQ_MAX_NUM_OF_STEPS / CHORD_PROG_LENGTH;
     noteSeqIndex = 0; //this needs to be iterated after everytime we add a note, so we store the next note in a new index
     
     for (int div = 0; div < CHORD_PROG_LENGTH; div++)
     {
-        noteSequence[LAYER_PAD][noteSeqIndex].note_step_num = div * chord_length;
-        noteSequence[LAYER_PAD][noteSeqIndex].note_chan = SEQ_PAD_CHAN;
-        noteSequence[LAYER_PAD][noteSeqIndex].note_num = global_root_note + Scales::scale[global_scale_to_use][Scales::chordProgression[pads_chord_prog_to_use][div]];
-        noteSequence[LAYER_PAD][noteSeqIndex].note_vel = pads_main_velocity;
-        noteSequence[LAYER_PAD][noteSeqIndex].note_length = chord_length; //FIXME: set this as pads_note_length
+        for (int chord = 0; chord < pads_density; chord++)
+        {
+            //set the note to be the global root note
+            int note_num = global_root_note;
+            //add on the index of the note in the scale relating to current chord progression position.
+            note_num += Scales::scale[global_scale_to_use][Scales::chordProgression[pads_chord_prog_to_use][div]];
+            //add on the note to the chord with the set interval (interval used as scale index, not note number).
+            note_num = note_num + (Scales::scale[global_scale_to_use][chord * pads_chord_interval]);
+            
+            noteSequence[LAYER_PAD][noteSeqIndex].note_step_num = div * chord_length;
+            noteSequence[LAYER_PAD][noteSeqIndex].note_chan = SEQ_PAD_CHAN;
+            noteSequence[LAYER_PAD][noteSeqIndex].note_num = note_num;
+            noteSequence[LAYER_PAD][noteSeqIndex].note_vel = pads_main_velocity;
+            noteSequence[LAYER_PAD][noteSeqIndex].note_length = chord_length; //FIXME: set this as pads_note_length
+            noteSeqIndex++;
+            
+        }
+    }
+    
+    //==================================================================================
+    //Add notes to bass sequence
+    //These are pretty much the same as pads
+    
+    //TODO: implement bass note division
+    
+    chord_length = SEQ_MAX_NUM_OF_STEPS / CHORD_PROG_LENGTH;
+    noteSeqIndex = 0; //this needs to be iterated after everytime we add a note, so we store the next note in a new index
+    
+    for (int div = 0; div < CHORD_PROG_LENGTH; div++)
+    {
+        noteSequence[LAYER_BASS][noteSeqIndex].note_step_num = div * chord_length;
+        noteSequence[LAYER_BASS][noteSeqIndex].note_chan = SEQ_BASS_CHAN;
+        //FIXME: should I make this note a further octave lower?
+        noteSequence[LAYER_BASS][noteSeqIndex].note_num = (global_root_note + Scales::scale[global_scale_to_use][Scales::chordProgression[pads_chord_prog_to_use][div]]) - 12;
+        noteSequence[LAYER_BASS][noteSeqIndex].note_vel = bass_main_velocity;
+        noteSequence[LAYER_BASS][noteSeqIndex].note_length = chord_length; //FIXME: why don't we have bass note length?
         noteSeqIndex++;
     }
+    
+    //==================================================================================
+    //Add notes to melody sequence
+    //How the hell do I do this?
     
  
 }
