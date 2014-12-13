@@ -30,17 +30,17 @@ MidiGenerator::MidiGenerator()
         }
     }
     
-    noteSequence[LAYER_MELODY][0].note_step_num = 10;
-    noteSequence[LAYER_MELODY][0].note_chan = 1;
-    noteSequence[LAYER_MELODY][0].note_num = 48;
-    noteSequence[LAYER_MELODY][0].note_vel = 110;
-    noteSequence[LAYER_MELODY][0].note_length = 25;
-    
-    noteSequence[LAYER_MELODY][1].note_step_num = 25;
-    noteSequence[LAYER_MELODY][1].note_chan = 1;
-    noteSequence[LAYER_MELODY][1].note_num = 50;
-    noteSequence[LAYER_MELODY][1].note_vel = 70;
-    noteSequence[LAYER_MELODY][1].note_length = 60;
+//    noteSequence[LAYER_MELODY][0].note_step_num = 10;
+//    noteSequence[LAYER_MELODY][0].note_chan = 1;
+//    noteSequence[LAYER_MELODY][0].note_num = 48;
+//    noteSequence[LAYER_MELODY][0].note_vel = 110;
+//    noteSequence[LAYER_MELODY][0].note_length = 25;
+//    
+//    noteSequence[LAYER_MELODY][1].note_step_num = 25;
+//    noteSequence[LAYER_MELODY][1].note_chan = 1;
+//    noteSequence[LAYER_MELODY][1].note_num = 50;
+//    noteSequence[LAYER_MELODY][1].note_vel = 70;
+//    noteSequence[LAYER_MELODY][1].note_length = 60;
 }
 
 MidiGenerator::~MidiGenerator()

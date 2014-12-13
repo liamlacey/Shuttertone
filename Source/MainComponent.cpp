@@ -16,7 +16,8 @@ MainContentComponent::MainContentComponent()
     midiGenerator = new MidiGenerator();
     
     //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg"));
-    image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(24).jpg"));
+    //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(24).jpg"));
+    image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(27).jpg"));
     
     imageWidth = image.getWidth();
     imageHeight = image.getHeight();
@@ -35,27 +36,53 @@ MainContentComponent::MainContentComponent()
     int sectionEndX[NUM_IMG_SECTIONS];
     int sectionEndY[NUM_IMG_SECTIONS];
     
-    //section 1 (top left)
+//    //positions for dividing image into corners
+//    //section 1 (top left)
+//    sectionStartX[0] = 0;
+//    sectionStartY[0] = 0;
+//    sectionEndX[0] = imageWidth / 2;
+//    sectionEndY[0] = imageHeight / 2;
+//    
+//    //section 2 (top right)
+//    sectionStartX[1] = imageWidth / 2;
+//    sectionStartY[1] = 0;
+//    sectionEndX[1] = imageWidth;
+//    sectionEndY[1] = imageHeight / 2;
+//    
+//    //section 3 (bottom left)
+//    sectionStartX[2] = 0;
+//    sectionStartY[2] = imageHeight / 2;
+//    sectionEndX[2] = imageWidth / 2;
+//    sectionEndY[2] = imageHeight;
+//    
+//    //section 4 (bottom right)
+//    sectionStartX[3] = imageWidth / 2;
+//    sectionStartY[3] = imageHeight / 2;
+//    sectionEndX[3] = imageWidth;
+//    sectionEndY[3] = imageHeight;
+    
+    //positions for dividing image into horizontal strips
+    //section 1 (top strip)
     sectionStartX[0] = 0;
     sectionStartY[0] = 0;
-    sectionEndX[0] = imageWidth / 2;
-    sectionEndY[0] = imageHeight / 2;
+    sectionEndX[0] = imageWidth;
+    sectionEndY[0] = imageHeight / 4;
     
-    //section 2 (top right)
-    sectionStartX[1] = imageWidth / 2;
-    sectionStartY[1] = 0;
+    //section 2 (middle-top strip)
+    sectionStartX[1] = 0;
+    sectionStartY[1] = imageHeight / 4;
     sectionEndX[1] = imageWidth;
     sectionEndY[1] = imageHeight / 2;
     
-    //section 3 (bottom left)
+    //section 3 (middle-bottom strip)
     sectionStartX[2] = 0;
     sectionStartY[2] = imageHeight / 2;
-    sectionEndX[2] = imageWidth / 2;
-    sectionEndY[2] = imageHeight;
+    sectionEndX[2] = imageWidth;
+    sectionEndY[2] = (imageHeight / 4) * 3;
     
-    //section 4 (bottom right)
-    sectionStartX[3] = imageWidth / 2;
-    sectionStartY[3] = imageHeight / 2;
+    //section 4 (bottom strip)
+    sectionStartX[3] = 0;
+    sectionStartY[3] = (imageHeight / 4) * 3;
     sectionEndX[3] = imageWidth;
     sectionEndY[3] = imageHeight;
     
