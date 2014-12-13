@@ -14,6 +14,7 @@
 #define NUM_OF_SCALES 10
 #define NUM_OF_CHORD_PROGRESSIONS 24
 #define NUM_OF_DRUM_PATTERNS 15
+#define DRUM_PATTERN_LENGTH 16
 
 namespace Scales
 {
@@ -79,7 +80,7 @@ namespace DrumPatterns
     //First index is pattern number, second index is hit/rest in pattern.
     //A 1 signifies a hit, and a 0 signifies a rest.
     
-    const int kickPattern[NUM_OF_DRUM_PATTERNS][16] =
+    const int kickPattern[NUM_OF_DRUM_PATTERNS][DRUM_PATTERN_LENGTH] =
     {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -98,7 +99,7 @@ namespace DrumPatterns
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     };
     
-    const int snarePattern[NUM_OF_DRUM_PATTERNS][16] =
+    const int snarePattern[NUM_OF_DRUM_PATTERNS][DRUM_PATTERN_LENGTH] =
     {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
@@ -117,7 +118,7 @@ namespace DrumPatterns
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     };
     
-    const int perc1Pattern[NUM_OF_DRUM_PATTERNS][16] =
+    const int perc1Pattern[NUM_OF_DRUM_PATTERNS][DRUM_PATTERN_LENGTH] =
     {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
@@ -136,7 +137,7 @@ namespace DrumPatterns
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     };
     
-    const int perc2Pattern[NUM_OF_DRUM_PATTERNS][16] =
+    const int perc2Pattern[NUM_OF_DRUM_PATTERNS][DRUM_PATTERN_LENGTH] =
     {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},

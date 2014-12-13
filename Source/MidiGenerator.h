@@ -41,10 +41,7 @@ enum SequencerLayers
     LAYER_PERC
 };
 
-//FIXME: should this be a variable instead that is used to change the tempo?
-#define SEQ_STEP_INTERVAL 100
-
-#define SEQ_MAX_NUM_OF_STEPS 64
+#define SEQ_MAX_NUM_OF_STEPS 16
 #define SEQ_MAX_NUM_OF_NOTES 512
 #define SIZE_OF_NOTE_OFF_BUF 64
 
@@ -54,6 +51,12 @@ enum SequencerLayers
 #define SEQ_PERC_CHAN 4
 
 #define NO_NOTE -1
+
+#define NOTE_NUM_KICK 36
+#define NOTE_NUM_SNARE 37
+#define NOTE_NUM_PERC1 38
+#define NOTE_NUM_PERC2 39
+
 
 class MidiGenerator : public Thread
 {
