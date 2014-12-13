@@ -31,6 +31,13 @@ enum ImageSections
 
 #define GLOBAL_SECTION NUM_IMG_SECTIONS
 
+static double scaleValue (double value, double minValue, double maxValue, double minRange, double maxRange)
+{
+    return (((maxRange - minRange) *
+             (value - minValue)) /
+            (maxValue - minValue)) + minRange;
+}
+
 // [END_USER_CODE_SECTION]
 
 //==============================================================================

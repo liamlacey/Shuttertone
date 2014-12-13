@@ -50,15 +50,17 @@ MidiGenerator::~MidiGenerator()
 
 void MidiGenerator::setSequenceData()
 {
-    //data that determines what notes are stored into noteSequence
+    //==================================================================================
+    //init varibles that determines what notes are stored into noteSequence
     
     //global
     int global_root_note;
     int global_scale_to_use;
+    //we have stepInterval too, but that's a class variable
     
     //melody
     float melody_num_of_octaves; //controls note range
-    float melody_note_jump_freq; //note order - what form is this value in?
+    //float melody_note_jump_freq; //note order - what form is this value in?
     int melody_main_velocity;
     int melody_velocity_offset; //dynamics - a larger offset means a larger range around the main velocity
     int melody_note_length; //in number of steps
@@ -83,6 +85,122 @@ void MidiGenerator::setSequenceData()
     int drums_main_velocity;
     int drums_velocity_offset; //dynamics - a larger offset means a larger range around the main velocity
     
+    //==================================================================================
+    //Apply global data values
+    
+    //use the hue value to get a root note
+    //FIXME: what range should root note be in?
+    global_root_note = scaleValue(averageHue[GLOBAL_SECTION], 0, 1.0, 36, 84);
+    std::cout << "Global root note: " << global_root_note << std::endl;
+    
+    //use blue value to get the scale number to use
+    global_scale_to_use = scaleValue(averageBlue[GLOBAL_SECTION], 0, 1.0, 0, NUM_OF_SCALES-1);
+    std::cout << "Global scale: " << global_scale_to_use << std::endl;
+    
+    //use brightness value to set the step interval to ultimately control the tempo
+    //FIXME: what range should the step interval be in?
+    stepInterval = scaleValue(averageBrightness[GLOBAL_SECTION], 0, 1.0, 80, 150);
+    std::cout << "Global time/step interval: " << stepInterval << std::endl;
+    
+    //==================================================================================
+    //Apply melody data values
+    
+    //use the red value to get the number of octaves to use
+    //FIXME: what range should I use here?
+    melody_num_of_octaves = scaleValue(averageRed[IMG_SECTION_1], 0, 1.0, 0.5, 4.0);
+    std::cout << "Melody number of octaves: " << melody_num_of_octaves << std::endl;
+    
+    //melody_note_jump_freq //FIXME: how do I set this?
+    
+    //use the saturation value to get the velocity value
+    //FIXME: what range should I use here?
+    melody_main_velocity = scaleValue(averageSaturation[IMG_SECTION_1], 0, 1.0, 30, 127);
+    std::cout << "Melody velocity: " << melody_main_velocity << std::endl;
+    
+    //use the brightness value to get the velocity offset for dynamic range
+    //FIXME: what range should I use here?
+    melody_velocity_offset = scaleValue(averageBrightness[IMG_SECTION_1], 0, 1.0, 0, 30);
+    std::cout << "Melody velocity offset: " << melody_velocity_offset << std::endl;
+    
+    //use the blue value to get the note length
+    //FIXME: what range should I use here?
+    melody_note_length = scaleValue(averageBlue[IMG_SECTION_1], 0, 1.0, 1, 16);
+    std::cout << "Melody note length: " << melody_note_length << std::endl;
+    
+    //==================================================================================
+    //Apply pad data values
+    
+    //use the red value to get the chord progression number to use.
+    pads_chord_prog_to_use = scaleValue(averageRed[IMG_SECTION_2], 0, 1.0, 0, NUM_OF_CHORD_PROGRESSIONS-1);
+    std::cout << "Pad chord progression: " << pads_chord_prog_to_use << std::endl;
+    
+    //use the blue value to get the note length
+    //FIXME: what range should I use here?
+    pads_note_length = scaleValue(averageBlue[IMG_SECTION_2], 0, 1.0, 16, 64);
+    std::cout << "Pad note length: " << pads_note_length << std::endl;
+    
+    //use the brightness value to get the number of chord note to use (density)
+    //FIXME: what range should I use here?
+    pads_density = scaleValue(averageBrightness[IMG_SECTION_2], 0, 1.0, 1, 4);
+    std::cout << "Pad density (chord notes): " << pads_density << std::endl;
+    
+    //use the saturation value to get the velocity value
+    //FIXME: what range should I use here?
+    pads_main_velocity = scaleValue(averageSaturation[IMG_SECTION_2], 0, 1.0, 30, 127);
+    std::cout << "Pad velocity: " << pads_main_velocity << std::endl;
+
+    //use the hue value to get the chord interval value
+    //FIXME: what range should I use here?
+    pads_chord_interval = scaleValue(averageHue[IMG_SECTION_2], 0, 1.0, 1, 4);
+    std::cout << "Pad chord interval: " << pads_chord_interval << std::endl;
+    
+    //==================================================================================
+    //Apply bass data values
+    
+    //use the saturation value to get the velocity value
+    //FIXME: what range should I use here?
+    bass_main_velocity = scaleValue(averageSaturation[IMG_SECTION_3], 0, 1.0, 30, 127);
+    std::cout << "Bass velocity: " << bass_main_velocity << std::endl;
+
+    //use the blue value to get the bass note division number
+    //FIMXE: what range should I use here?
+    bass_note_division = scaleValue(averageBlue[IMG_SECTION_3], 0, 1.0, 1, 8);
+    std::cout << "Bass note division: " << bass_note_division << std::endl;
+    
+    //==================================================================================
+    //Apply drum data values
+    
+    //use the red value to get the kick pattern to use
+    drums_kick_pattern_to_use = scaleValue(averageRed[IMG_SECTION_4], 0, 1.0, 0, NUM_OF_DRUM_PATTERNS-1);
+    std::cout << "Drums kick pattern: " << drums_kick_pattern_to_use << std::endl;
+    
+    //use the green value to get the snare pattern to use
+    drums_snare_pattern_to_use = scaleValue(averageGreen[IMG_SECTION_4], 0, 1.0, 0, NUM_OF_DRUM_PATTERNS-1);
+    std::cout << "Drums snare pattern: " << drums_snare_pattern_to_use << std::endl;
+    
+    //use the blue value to get the perc1 pattern to use
+    drums_perc1_pattern_to_use = scaleValue(averageBlue[IMG_SECTION_4], 0, 1.0, 0, NUM_OF_DRUM_PATTERNS-1);
+    std::cout << "Drums perc 1 pattern: " << drums_perc1_pattern_to_use << std::endl;
+    
+    //use the perceived brightness value to get the perc2 pattern to use
+    drums_perc2_pattern_to_use = scaleValue(averagePerceivedBrightness[IMG_SECTION_4], 0, 1.0, 0, NUM_OF_DRUM_PATTERNS-1);
+    std::cout << "Drums perc 2 pattern: " << drums_perc2_pattern_to_use << std::endl;
+    
+    //use the hue value to get an offbeat step number
+    //FIXME: what range should I use here
+    drums_offbeat_value = scaleValue(averageHue[IMG_SECTION_4], 0, 1.0, 0, 16);
+    std::cout << "Drums offbeat value: " << drums_offbeat_value << std::endl;
+    
+    //use the saturation value to get the velocity value
+    //FIXME: what range should I use here?
+    drums_main_velocity = scaleValue(averageSaturation[IMG_SECTION_4], 0, 1.0, 30, 127);
+    std::cout << "Drums velocity: " << drums_main_velocity << std::endl;
+    
+    //use the brightness value to get the velocity offset for dynamic range
+    //FIXME: what range should I use here?
+    drums_velocity_offset = scaleValue(averageBrightness[IMG_SECTION_4], 0, 1.0, 0, 30);
+    std::cout << "Drums velocity offset: " << drums_velocity_offset << std::endl;
+ 
 }
 
 
@@ -112,7 +230,7 @@ void MidiGenerator::run()
         if (Time::getMillisecondCounterHiRes() >= current_time)
         {
             //increase currentTime
-             current_time += SEQ_STEP_INTERVAL;
+             current_time += stepInterval;
             
             
             //==================================================================================
