@@ -5,6 +5,7 @@
               includeBinaryInAppConfig="1" jucerVersion="3.1.0">
   <MAINGROUP id="z7sSgT" name="MusicHackday2014Project">
     <GROUP id="{B75A2A8B-CAE3-714B-5151-23A779C661CF}" name="Source">
+      <FILE id="UWN2TO" name="Scales.h" compile="0" resource="0" file="Source/Scales.h"/>
       <FILE id="RJJHp8" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="pSUZg1" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="cT4IlU" name="MainComponent.cpp" compile="1" resource="0"

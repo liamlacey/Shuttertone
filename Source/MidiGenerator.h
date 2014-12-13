@@ -12,6 +12,7 @@
 #define MIDIGENERATOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Scales.h"
 
 //This is my first attempt at a struct for storing note data so we can play a sequence of notes.
 //When searching through arrays of this struct, it should only process the object/note
