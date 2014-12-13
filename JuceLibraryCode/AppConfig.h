@@ -19,6 +19,18 @@
 
 // (You can add your own code in this section, and the Introjucer will not overwrite it)
 
+enum ImageSections
+{
+    IMG_SECTION_1 = 0,
+    IMG_SECTION_2,
+    IMG_SECTION_3,
+    IMG_SECTION_4,
+    
+    NUM_IMG_SECTIONS
+};
+
+#define GLOBAL_SECTION NUM_IMG_SECTIONS
+
 // [END_USER_CODE_SECTION]
 
 //==============================================================================

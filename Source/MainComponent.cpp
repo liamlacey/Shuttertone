@@ -11,14 +11,9 @@
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
+                        
 {
-    //Create a virtual MIDI output device
-    midiOutputDevice = MidiOutput::createNewDevice("Generative MIDI App");
-    
-    if(midiOutputDevice)
-        midiOutputDevice->startBackgroundThread();
-    else
-        std::cout << "Failed to create a virtual MIDI output device!" << std::endl;
+    midiGenerator = new MidiGenerator();
     
     //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg"));
     image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(24).jpg"));
@@ -102,16 +97,16 @@ MainContentComponent::MainContentComponent()
         
         std::cout << "Pixel Count: " << pixelCounter << std::endl;
         
-        //work out the average of each colour value
-        averageRed[section] = accRed / (float)pixelCounter;
-        averageGreen[section] = accGreen / (float)pixelCounter;
-        averageBlue[section] = accBlue / (float)pixelCounter;
-        averageBrightness[section] = accBrightness / (float)pixelCounter;
-        averagePerceivedBrightness[section] = accPerceivedBrightness / (float)pixelCounter;
-        averageHue[section] = accHue / (float)pixelCounter;
-        averageSaturation[section] = accSaturation / (float)pixelCounter;
+        //set the average of each colour value
+        midiGenerator->setAverageRed (section, accRed / (float)pixelCounter);
+        midiGenerator->setAverageGreen (section, accGreen / (float)pixelCounter);
+        midiGenerator->setAverageBlue (section, accBlue / (float)pixelCounter);
+        midiGenerator->setAverageBrightness (section, accBrightness / (float)pixelCounter);
+        midiGenerator->setAveragePerceivedBrightness (section, accPerceivedBrightness / (float)pixelCounter);
+        midiGenerator->setAverageHue (section, accHue / (float)pixelCounter);
+        midiGenerator->setAverageSaturation (section, accSaturation / (float)pixelCounter);
         
-        std::cout << "Red: " << averageRed[section] << " Blue: " << averageBlue[section] << " Green:" << averageGreen[section] << " Brightness: " << averageBrightness[section] << " Perceived Brightness: " << averagePerceivedBrightness[section] << " Hue: " << averageHue[section] << " Saturation: " << averageSaturation[section] << std::endl;
+        std::cout << "Red: " << midiGenerator->getAverageRed(section) << " Blue: " << midiGenerator->getAverageBlue(section) << " Green:" << midiGenerator->getAverageGreen(section) << " Brightness: " << midiGenerator->getAverageBrightness(section) << " Perceived Brightness: " << midiGenerator->getAveragePerceivedBrightness(section) << " Hue: " << midiGenerator->getAverageHue(section) << " Saturation: " << midiGenerator->getAverageSaturation(section) << std::endl;
         std::cout << std::endl;
     }
     
@@ -127,29 +122,26 @@ MainContentComponent::MainContentComponent()
     
     for (int section = 0; section < NUM_IMG_SECTIONS; section++)
     {
-        accRed += averageRed[section];
-        accGreen += averageGreen[section];
-        accBlue += averageBlue[section];
-        accBrightness += averageBrightness[section];
-        accPerceivedBrightness += averagePerceivedBrightness[section];
-        accHue += averageHue[section];
-        accSaturation += averageSaturation[section];
+        accRed += midiGenerator->getAverageRed(section);
+        accGreen += midiGenerator->getAverageGreen(section);
+        accBlue += midiGenerator->getAverageBlue(section);
+        accBrightness += midiGenerator->getAverageBrightness(section);
+        accPerceivedBrightness += midiGenerator->getAveragePerceivedBrightness(section);
+        accHue += midiGenerator->getAverageHue(section);
+        accSaturation += midiGenerator->getAverageSaturation(section);
     }
     
-    averageRed[GLOBAL_SECTION] = accRed / (float)NUM_IMG_SECTIONS;
-    averageGreen[GLOBAL_SECTION] = accGreen / (float)NUM_IMG_SECTIONS;
-    averageBlue[GLOBAL_SECTION] = accBlue / (float)NUM_IMG_SECTIONS;
-    averageBrightness[GLOBAL_SECTION] = accBrightness / (float)NUM_IMG_SECTIONS;
-    averagePerceivedBrightness[GLOBAL_SECTION] = accPerceivedBrightness / (float)NUM_IMG_SECTIONS;
-    averageHue[GLOBAL_SECTION] = accHue / (float)NUM_IMG_SECTIONS;
-    averageSaturation[GLOBAL_SECTION] = accSaturation / (float)NUM_IMG_SECTIONS;
+    midiGenerator->setAverageRed (GLOBAL_SECTION, accRed / (float)NUM_IMG_SECTIONS);
+    midiGenerator->setAverageGreen (GLOBAL_SECTION, accGreen / (float)NUM_IMG_SECTIONS);
+    midiGenerator->setAverageBlue (GLOBAL_SECTION, accBlue / (float)NUM_IMG_SECTIONS);
+    midiGenerator->setAverageBrightness (GLOBAL_SECTION, accBrightness / (float)NUM_IMG_SECTIONS);
+    midiGenerator->setAveragePerceivedBrightness (GLOBAL_SECTION, accPerceivedBrightness / (float)NUM_IMG_SECTIONS);
+    midiGenerator->setAverageHue (GLOBAL_SECTION, accHue / (float)NUM_IMG_SECTIONS);
+    midiGenerator->setAverageSaturation (GLOBAL_SECTION, accSaturation / (float)NUM_IMG_SECTIONS);
     
     std::cout << "Whole Image" << std::endl;
-    std::cout << "Red: " << averageRed[GLOBAL_SECTION] << " Blue: " << averageBlue[GLOBAL_SECTION] << " Green:" << averageGreen[GLOBAL_SECTION] << " Brightness: " << averageBrightness[GLOBAL_SECTION] << " Perceived Brightness: " << averagePerceivedBrightness[GLOBAL_SECTION] << " Hue: " << averageHue[GLOBAL_SECTION] << " Saturation: " << averageSaturation[GLOBAL_SECTION] << std::endl;
+    std::cout << "Red: " << midiGenerator->getAverageRed(GLOBAL_SECTION) << " Blue: " << midiGenerator->getAverageBlue(GLOBAL_SECTION) << " Green:" << midiGenerator->getAverageGreen(GLOBAL_SECTION) << " Brightness: " << midiGenerator->getAverageBrightness(GLOBAL_SECTION) << " Perceived Brightness: " << midiGenerator->getAveragePerceivedBrightness(GLOBAL_SECTION) << " Hue: " << midiGenerator->getAverageHue(GLOBAL_SECTION) << " Saturation: " << midiGenerator->getAverageSaturation(GLOBAL_SECTION) << std::endl;
     std::cout << std::endl;
-
-    
-    
 
     addAndMakeVisible(imageComponent = new ImageComponent());
     imageComponent->setImage (image);
@@ -183,8 +175,18 @@ void MainContentComponent::buttonClicked (Button *button)
     if (button == playButton)
     {
         if (button->getToggleState())
+        {
+            midiGenerator->startThread();
+            
             button->setButtonText("Stop");
+        }
         else
+        {
+            midiGenerator->stopThread(500);
+            
             button->setButtonText("Play");
-    }
+            
+        }
+        
+    } //if (button == playButton)
 }
