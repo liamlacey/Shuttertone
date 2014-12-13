@@ -12,7 +12,7 @@
 #define MIDIGENERATOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "Scales.h"
+#include "Scales&Patterns.h"
 
 //This is my first attempt at a struct for storing note data so we can play a sequence of notes.
 //When searching through arrays of this struct, it should only process the object/note
@@ -64,6 +64,8 @@ public:
     MidiGenerator();
     ~MidiGenerator();
     
+    void setSequenceData();
+    
     //Thread callback function
     void run();
     
@@ -103,6 +105,7 @@ private:
     //arrays to store sequences of note data
     NoteMessageData noteSequence[NUM_OF_LAYERS][SEQ_MAX_NUM_OF_NOTES];
     
+    int stepInterval; //used as a tempo indicator
 };
 
 

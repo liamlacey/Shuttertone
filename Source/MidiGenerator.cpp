@@ -48,6 +48,43 @@ MidiGenerator::~MidiGenerator()
     
 }
 
+void MidiGenerator::setSequenceData()
+{
+    //data that determines what notes are stored into noteSequence
+    
+    //global
+    int global_root_note;
+    int global_scale_to_use;
+    
+    //melody
+    float melody_num_of_octaves; //controls note range
+    float melody_note_jump_freq; //note order - what form is this value in?
+    int melody_main_velocity;
+    int melody_velocity_offset; //dynamics - a larger offset means a larger range around the main velocity
+    int melody_note_length; //in number of steps
+    
+    //pads
+    int pads_chord_prog_to_use;
+    int pads_note_length; //in number of steps
+    int pads_density; //number of notes in chords
+    int pads_main_velocity;
+    int pads_chord_interval;
+    
+    //bass
+    int bass_main_velocity;
+    int bass_note_division; //staccato/legato - how many 'plucks' a note is played as.
+    
+    //drums/perc
+    int drums_kick_pattern_to_use;
+    int drums_snare_pattern_to_use;
+    int drums_perc1_pattern_to_use;
+    int drums_perc2_pattern_to_use;
+    int drums_offbeat_value; //value to shift patterns by in steps
+    int drums_main_velocity;
+    int drums_velocity_offset; //dynamics - a larger offset means a larger range around the main velocity
+    
+}
+
 
 void MidiGenerator::run()
 {

@@ -169,6 +169,8 @@ MainContentComponent::MainContentComponent()
     std::cout << "Whole Image" << std::endl;
     std::cout << "Red: " << midiGenerator->getAverageRed(GLOBAL_SECTION) << " Blue: " << midiGenerator->getAverageBlue(GLOBAL_SECTION) << " Green:" << midiGenerator->getAverageGreen(GLOBAL_SECTION) << " Brightness: " << midiGenerator->getAverageBrightness(GLOBAL_SECTION) << " Perceived Brightness: " << midiGenerator->getAveragePerceivedBrightness(GLOBAL_SECTION) << " Hue: " << midiGenerator->getAverageHue(GLOBAL_SECTION) << " Saturation: " << midiGenerator->getAverageSaturation(GLOBAL_SECTION) << std::endl;
     std::cout << std::endl;
+    
+    midiGenerator->setSequenceData();
 
     addAndMakeVisible(imageComponent = new ImageComponent());
     imageComponent->setImage (image);
@@ -179,7 +181,9 @@ MainContentComponent::MainContentComponent()
     playButton->addListener(this);
     
     
-    setSize (600, 400);
+    setSize (1000, 700);
+    
+    
 }
 
 MainContentComponent::~MainContentComponent()
