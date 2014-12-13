@@ -207,57 +207,64 @@ void MidiGenerator::setSequenceData()
     
     int noteSeqIndex = 0; //this needs to be iterated after everytime we add a note, so we store the next note in a new index
     
+    //see if we need to repeat the pattern based on the currently set sequence length
+    int repeat_val = SEQ_MAX_NUM_OF_STEPS / DRUM_PATTERN_LENGTH;
+    
     for (int step = 0; step < DRUM_PATTERN_LENGTH; step++)
     {
         //TODO: here for each drum, apply velocity dynamics and offbeat
         
-        //add kick pattern
-        
-        if (DrumPatterns::kickPattern[drums_kick_pattern_to_use][step] == 1)
+        for (int repeat = 0; repeat < repeat_val; repeat++)
         {
-            noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_KICK;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+            //add kick pattern
             
-            noteSeqIndex++;
-        }
-        
-        //add snare pattern
-        
-        if (DrumPatterns::snarePattern[drums_snare_pattern_to_use][step] == 1)
-        {
-            noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_SNARE;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+            if (DrumPatterns::kickPattern[drums_kick_pattern_to_use][step] == 1)
+            {
+                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
+                noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_KICK;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+                
+                noteSeqIndex++;
+            }
             
-            noteSeqIndex++;
-        }
-        
-        if (DrumPatterns::perc1Pattern[drums_perc1_pattern_to_use][step] == 1)
-        {
-            noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC1;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+            //add snare pattern
             
-            noteSeqIndex++;
-        }
-        
-        if (DrumPatterns::perc2Pattern[drums_perc2_pattern_to_use][step] == 1)
-        {
-            noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC2;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
-            noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+            if (DrumPatterns::snarePattern[drums_snare_pattern_to_use][step] == 1)
+            {
+                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
+                noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_SNARE;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+                
+                noteSeqIndex++;
+            }
             
-            noteSeqIndex++;
-        }
+            if (DrumPatterns::perc1Pattern[drums_perc1_pattern_to_use][step] == 1)
+            {
+                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
+                noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC1;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+                
+                noteSeqIndex++;
+            }
+            
+            if (DrumPatterns::perc2Pattern[drums_perc2_pattern_to_use][step] == 1)
+            {
+                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
+                noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC2;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
+                
+                noteSeqIndex++;
+            }
+            
+        } //for (int repeat = 0; repeat < repeat_val; repeat++)
     
     } //for (int step = 0; step < DRUM_PATTERN_LENGTH; step++)
     
