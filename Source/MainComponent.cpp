@@ -20,10 +20,17 @@ MainContentComponent::MainContentComponent()
     else
         std::cout << "Failed to create a virtual MIDI output device!" << std::endl;
     
-    
-    image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/2-tree-and-sunset.jpg"));
+    image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg"));
     addAndMakeVisible(imageComponent = new ImageComponent());
     imageComponent->setImage (image);
+    
+    std::cout << image.getWidth() << std::endl;
+    std::cout << image.getHeight() << std::endl;
+    std::cout << image.isARGB() << std::endl;
+    
+     Colour pixelColour = image.getPixelAt(image.getWidth()-1, 0);
+    
+    std::cout << "Red: " << pixelColour.getFloatRed() << " Blue: " << pixelColour.getFloatBlue() << " Green:" << pixelColour.getFloatGreen() << " Brightness: " << pixelColour.getBrightness() << " Perceived Brightness: " << pixelColour.getPerceivedBrightness() << " Hue: " << pixelColour.getHue() << " Saturation: " << pixelColour.getSaturation() << std::endl;
     
     
     addAndMakeVisible(playButton = new TextButton());
