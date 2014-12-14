@@ -35,6 +35,7 @@ public:
     
     //=========================================
     //Backend stuff...
+    void analyseImage();
     
 
 private:
@@ -43,6 +44,7 @@ private:
     //=========================================
     //GUI/Image stuff...
     ScopedPointer <TextButton> playButton;
+    ScopedPointer<TextButton> loadImageButton;
     
     Image image;
     int imageWidth, imageHeight;

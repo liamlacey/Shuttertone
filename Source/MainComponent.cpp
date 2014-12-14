@@ -20,8 +20,85 @@ MainContentComponent::MainContentComponent()
     //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(27).jpg"));
     //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(55).jpg"));
     //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(135).jpg"));
+
+    //get colour data from image and generate sequence data from it
+    analyseImage();
+    
+    addAndMakeVisible(imageComponent = new ImageComponent());
+    imageComponent->setImage (image);
+    
+    addAndMakeVisible(playButton = new TextButton());
+    playButton->setClickingTogglesState(true);
+    playButton->setButtonText("Play");
+    playButton->addListener(this);
+    
+    addAndMakeVisible(loadImageButton = new TextButton());
+    loadImageButton->setButtonText("Load Image");
+    loadImageButton->addListener(this);
     
     
+    setSize (1000, 700);
+    
+    
+}
+
+MainContentComponent::~MainContentComponent()
+{
+}
+
+void MainContentComponent::paint (Graphics& g)
+{
+    g.fillAll (Colour (0xff001F36));
+}
+
+void MainContentComponent::resized()
+{
+    imageComponent->setBounds(0, 0, getWidth(), getHeight() - 60);
+    
+    loadImageButton->setBounds((getWidth()/2) - 110, getHeight() - 50, 100, 40);
+    playButton->setBounds((getWidth()/2) +10, getHeight() - 50, 100, 40);
+}
+
+void MainContentComponent::buttonClicked (Button *button)
+{
+    if (button == playButton)
+    {
+        if (button->getToggleState())
+        {
+            midiGenerator->startThread();
+            
+            button->setButtonText("Stop");
+        }
+        else
+        {
+            midiGenerator->stopThread(500);
+            
+            button->setButtonText("Play");
+            
+        }
+        
+    } //if (button == playButton)
+    
+    else if (button == loadImageButton)
+    {
+        FileChooser myChooser ("Please select an image to load...",
+                               File("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/"),
+                               "*.jpeg;*.jpg;*.png");
+        
+        if (myChooser.browseForFileToOpen())
+        {
+            image = ImageCache::getFromFile(myChooser.getResult());
+            imageComponent->setImage(image);
+            
+            //get colour data from new image and generate sequence data from it
+            analyseImage();
+        }
+    }
+}
+
+
+void MainContentComponent::analyseImage()
+{
     imageWidth = image.getWidth();
     imageHeight = image.getHeight();
     
@@ -39,30 +116,30 @@ MainContentComponent::MainContentComponent()
     int sectionEndX[NUM_IMG_SECTIONS];
     int sectionEndY[NUM_IMG_SECTIONS];
     
-//    //positions for dividing image into corners
-//    //section 1 (top left)
-//    sectionStartX[0] = 0;
-//    sectionStartY[0] = 0;
-//    sectionEndX[0] = imageWidth / 2;
-//    sectionEndY[0] = imageHeight / 2;
-//    
-//    //section 2 (top right)
-//    sectionStartX[1] = imageWidth / 2;
-//    sectionStartY[1] = 0;
-//    sectionEndX[1] = imageWidth;
-//    sectionEndY[1] = imageHeight / 2;
-//    
-//    //section 3 (bottom left)
-//    sectionStartX[2] = 0;
-//    sectionStartY[2] = imageHeight / 2;
-//    sectionEndX[2] = imageWidth / 2;
-//    sectionEndY[2] = imageHeight;
-//    
-//    //section 4 (bottom right)
-//    sectionStartX[3] = imageWidth / 2;
-//    sectionStartY[3] = imageHeight / 2;
-//    sectionEndX[3] = imageWidth;
-//    sectionEndY[3] = imageHeight;
+    //    //positions for dividing image into corners
+    //    //section 1 (top left)
+    //    sectionStartX[0] = 0;
+    //    sectionStartY[0] = 0;
+    //    sectionEndX[0] = imageWidth / 2;
+    //    sectionEndY[0] = imageHeight / 2;
+    //
+    //    //section 2 (top right)
+    //    sectionStartX[1] = imageWidth / 2;
+    //    sectionStartY[1] = 0;
+    //    sectionEndX[1] = imageWidth;
+    //    sectionEndY[1] = imageHeight / 2;
+    //
+    //    //section 3 (bottom left)
+    //    sectionStartX[2] = 0;
+    //    sectionStartY[2] = imageHeight / 2;
+    //    sectionEndX[2] = imageWidth / 2;
+    //    sectionEndY[2] = imageHeight;
+    //
+    //    //section 4 (bottom right)
+    //    sectionStartX[3] = imageWidth / 2;
+    //    sectionStartY[3] = imageHeight / 2;
+    //    sectionEndX[3] = imageWidth;
+    //    sectionEndY[3] = imageHeight;
     
     //positions for dividing image into horizontal strips
     //section 1 (top strip)
@@ -105,7 +182,7 @@ MainContentComponent::MainContentComponent()
         int  pixelCounter = 0;
         
         Colour pixelColour;
-
+        
         //get the colour values of each pixel of this section
         for (int pixelX = sectionStartX[section]; pixelX < sectionEndX[section]; pixelX++)
         {
@@ -173,54 +250,6 @@ MainContentComponent::MainContentComponent()
     std::cout << "Red: " << midiGenerator->getAverageRed(GLOBAL_SECTION) << " Blue: " << midiGenerator->getAverageBlue(GLOBAL_SECTION) << " Green:" << midiGenerator->getAverageGreen(GLOBAL_SECTION) << " Brightness: " << midiGenerator->getAverageBrightness(GLOBAL_SECTION) << " Perceived Brightness: " << midiGenerator->getAveragePerceivedBrightness(GLOBAL_SECTION) << " Hue: " << midiGenerator->getAverageHue(GLOBAL_SECTION) << " Saturation: " << midiGenerator->getAverageSaturation(GLOBAL_SECTION) << std::endl;
     std::cout << std::endl;
     
+    //generate sequence data
     midiGenerator->setSequenceData();
-
-    addAndMakeVisible(imageComponent = new ImageComponent());
-    imageComponent->setImage (image);
-    
-    addAndMakeVisible(playButton = new TextButton());
-    playButton->setClickingTogglesState(true);
-    playButton->setButtonText("Play");
-    playButton->addListener(this);
-    
-    
-    setSize (1000, 700);
-    
-    
-}
-
-MainContentComponent::~MainContentComponent()
-{
-}
-
-void MainContentComponent::paint (Graphics& g)
-{
-    g.fillAll (Colour (0xff001F36));
-}
-
-void MainContentComponent::resized()
-{
-    imageComponent->setBounds(0, 0, getWidth(), getHeight() - 60);
-    playButton->setBounds((getWidth()/2) - 50, getHeight() - 50, 100, 40);
-}
-
-void MainContentComponent::buttonClicked (Button *button)
-{
-    if (button == playButton)
-    {
-        if (button->getToggleState())
-        {
-            midiGenerator->startThread();
-            
-            button->setButtonText("Stop");
-        }
-        else
-        {
-            midiGenerator->stopThread(500);
-            
-            button->setButtonText("Play");
-            
-        }
-        
-    } //if (button == playButton)
 }
