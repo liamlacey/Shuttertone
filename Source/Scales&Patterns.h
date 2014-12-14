@@ -11,11 +11,14 @@
 #ifndef SCALES_H_INCLUDED
 #define SCALES_H_INCLUDED
 
-#define NUM_OF_SCALES 10
+#define NUM_OF_SCALES /*10*/ 6
 #define NUM_OF_CHORD_PROGRESSIONS 24
 #define NUM_OF_DRUM_PATTERNS 15
+#define NUM_OF_NOTE_AMOUNTS 7
 #define DRUM_PATTERN_LENGTH 16
 #define CHORD_PROG_LENGTH 4
+#define SCALE_LENGTH 7
+
 
 namespace Scales
 {
@@ -24,16 +27,16 @@ namespace Scales
     //-1 means not a note (this is needed as some scales has less notes in an octave).
     //I've put them in an order from happy to sad (ish).
     //These scales are used to determine notes that can be used in lead, pads, and bass layers.
-    const int scale[NUM_OF_SCALES][7] =
+    const int scale[NUM_OF_SCALES][SCALE_LENGTH] =
     {
         {0,2,4,5,7,9,11}, //major
-        {0,2,4,7,9,-1,-1}, //majorPentatonic
-        {0,3,5,6,7,10,-1}, //blues
-        {0,3,4,5,7,9,10}, //rockNRoll
-        {0,2,3,6,7,8,11}, //hungarianGypsy
-        {0,4,5,7,9,10,11}, //ragaMadhuri
+        {0,2,4,7,9,12,14}, //majorPentatonic
+        //{0,3,5,6,7,10,12}, //blues
+        //{0,3,4,5,7,9,10}, //rockNRoll
+        //{0,2,3,6,7,8,11}, //hungarianGypsy
+        //{0,4,5,7,9,10,11}, //ragaMadhuri
         {0,2,3,5,7,8,10}, //minor
-        {0,3,5,7,10,-1,-1}, //minorPentatonic
+        {0,3,5,7,10,12,15}, //minorPentatonic
         {0,2,3,5,7,9,11}, //melodicMinor
         {0,2,3,5,7,8,11} //harmonicMinor
     };
@@ -158,6 +161,9 @@ namespace DrumPatterns
     };
     
 }
+
+
+const int noteAmount[NUM_OF_NOTE_AMOUNTS] = {1,1,2,4,8,12,16};
 
 
 #endif  // SCALES_H_INCLUDED

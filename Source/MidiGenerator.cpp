@@ -20,27 +20,6 @@ MidiGenerator::MidiGenerator()
         midiOutputDevice->startBackgroundThread();
     else
         std::cout << "Failed to create a virtual MIDI output device!" << std::endl;
-    
-    //default sequence arrays to hold no notes. This will need to be done everytime I new sequence is applied.
-    for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
-    {
-        for (int note = 0; note < SEQ_MAX_NUM_OF_NOTES; note++)
-        {
-            noteSequence[layer][note].note_step_num = NO_NOTE;
-        }
-    }
-    
-//    noteSequence[LAYER_MELODY][0].note_step_num = 10;
-//    noteSequence[LAYER_MELODY][0].note_chan = 1;
-//    noteSequence[LAYER_MELODY][0].note_num = 48;
-//    noteSequence[LAYER_MELODY][0].note_vel = 110;
-//    noteSequence[LAYER_MELODY][0].note_length = 25;
-//    
-//    noteSequence[LAYER_MELODY][1].note_step_num = 25;
-//    noteSequence[LAYER_MELODY][1].note_chan = 1;
-//    noteSequence[LAYER_MELODY][1].note_num = 50;
-//    noteSequence[LAYER_MELODY][1].note_vel = 70;
-//    noteSequence[LAYER_MELODY][1].note_length = 60;
 }
 
 MidiGenerator::~MidiGenerator()
@@ -50,6 +29,14 @@ MidiGenerator::~MidiGenerator()
 
 void MidiGenerator::setSequenceData()
 {
+    //default sequence arrays to hold no notes. This will need to be done everytime I new sequence is applied.
+    for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+    {
+        for (int note = 0; note < SEQ_MAX_NUM_OF_NOTES; note++)
+        {
+            noteSequence[layer][note].note_step_num = NO_NOTE;
+        }
+    }
     //==================================================================================
     //init varibles that determines what notes are stored into noteSequence
     
@@ -59,11 +46,12 @@ void MidiGenerator::setSequenceData()
     //we have stepInterval too, but that's a class variable
     
     //melody
-    float melody_num_of_octaves; //controls note range
+    int melody_num_of_octaves; //controls note range
     //float melody_note_jump_freq; //note order - what form is this value in?
     int melody_main_velocity;
     int melody_velocity_offset; //dynamics - a larger offset means a larger range around the main velocity
     int melody_note_length; //in number of steps
+    int melody_note_frequency;
     
     //pads
     int pads_chord_prog_to_use;
@@ -90,6 +78,7 @@ void MidiGenerator::setSequenceData()
     
     //use the hue value to get a root note
     //FIXME: what range should root note be in?
+    //FIXME: change this to use a different colour value?
     global_root_note = scaleValue(averageHue[GLOBAL_SECTION], 0, 1.0, 36, 84);
     std::cout << "Global root note: " << global_root_note << std::endl;
     
@@ -107,7 +96,7 @@ void MidiGenerator::setSequenceData()
     
     //use the red value to get the number of octaves to use
     //FIXME: what range should I use here?
-    melody_num_of_octaves = scaleValue(averageRed[IMG_SECTION_1], 0, 1.0, 0.5, 4.0);
+    melody_num_of_octaves = scaleValue(averageRed[IMG_SECTION_1], 0, 1.0, 1, 5);
     std::cout << "Melody number of octaves: " << melody_num_of_octaves << std::endl;
     
     //melody_note_jump_freq //FIXME: how do I set this?
@@ -126,6 +115,11 @@ void MidiGenerator::setSequenceData()
     //FIXME: what range should I use here?
     melody_note_length = scaleValue(averageBlue[IMG_SECTION_1], 0, 1.0, 1, 16);
     std::cout << "Melody note length: " << melody_note_length << std::endl;
+    
+    //use the hue value to get the note frequency
+    //FIXME: what range should I use here?
+    melody_note_frequency = scaleValue(averageHue[IMG_SECTION_1], 0, 1.0, 0, NUM_OF_NOTE_AMOUNTS-1);
+    std::cout << "Melody note frequency: " << melody_note_frequency << std::endl;
     
     //==================================================================================
     //Apply pad data values
@@ -210,6 +204,49 @@ void MidiGenerator::setSequenceData()
     //Add notes to melody sequence
     //How the hell do I do this?
     
+    //TODO: could do with getting a 'number/freq of rests' parameter??
+    //TODO: implement velocity dynamics
+    
+    //=====================================
+    //create buffer of notes to use based on root note, scale, and num of octaves.
+    
+    Array<int>mel_note_buffer;
+    int mel_note_buffer_size = SCALE_LENGTH * melody_num_of_octaves;
+    
+    //populate buffer
+    for (int oct = 0; oct < melody_num_of_octaves; oct++)
+    {
+        for (int scale_index = 0; scale_index < SCALE_LENGTH; scale_index++)
+        {
+            mel_note_buffer.add (global_root_note + Scales::scale[global_scale_to_use][scale_index] + (oct * 12));
+        }
+    }
+    
+    noteSeqIndex = 0;
+    
+    //create a random number generator for choosing an index of note_buffer
+    Random randomGen(Time::currentTimeMillis());
+    
+    //=====================================
+    //add notes to sequence array
+    
+    //iterate for loop by the set noteAmount (so it doesn't just go up in 1's and be placed on every step)
+    for (int i = 0; i < SEQ_MAX_NUM_OF_STEPS; i += noteAmount[melody_note_frequency])
+    {
+        //get a random note from note_buffer
+        int note_index = randomGen.nextInt(mel_note_buffer_size-1);
+        int note_num = mel_note_buffer[note_index];
+        
+        //add notes to sequence
+        noteSequence[LAYER_MELODY][noteSeqIndex].note_step_num = i;
+        noteSequence[LAYER_MELODY][noteSeqIndex].note_chan = SEQ_MELODY_CHAN;
+        noteSequence[LAYER_MELODY][noteSeqIndex].note_num = note_num;
+        noteSequence[LAYER_MELODY][noteSeqIndex].note_vel = melody_main_velocity;
+        noteSequence[LAYER_MELODY][noteSeqIndex].note_length = melody_note_length;
+        noteSeqIndex++;
+        
+    }
+    
     //==================================================================================
     //Add notes to pad sequence
     //Chord are applied in a pattern of four, depend on the chosen chord progression and chosen scale.
@@ -218,8 +255,22 @@ void MidiGenerator::setSequenceData()
     //note numbers applied here are the global root note + the index of the chosen scale relating to the values of the chosen chord progression.
     
     //TODO: and note lengths
-    //FIXME: it might be possible for high pad notes to go out of bounds of the sacle.
-    //we should probably create a new temp scale here based on the set scale, but which includes a few more octaves
+    
+    //It might be possible for high pad notes to go out of bounds of the scale.
+    //Create a new temp scale here based on the set scale, but which includes a few more octaves (currently 5)
+    
+    Array<int>pad_note_buffer;
+    //int pad_note_buffer_size = SCALE_LENGTH * 5;
+    
+    //populate buffer
+    for (int oct = 0; oct < 5; oct++)
+    {
+        for (int scale_index = 0; scale_index < SCALE_LENGTH; scale_index++)
+        {
+            pad_note_buffer.add (Scales::scale[global_scale_to_use][scale_index] + (oct * 12));
+            //note that this note buffer starts from 0, unlike the melody one that starts from root note
+        }
+    }
     
     chord_length = SEQ_MAX_NUM_OF_STEPS / CHORD_PROG_LENGTH;
     noteSeqIndex = 0; //this needs to be iterated after everytime we add a note, so we store the next note in a new index
@@ -231,9 +282,9 @@ void MidiGenerator::setSequenceData()
             //set the note to be the global root note
             int note_num = global_root_note;
             //add on the index of the note in the scale relating to current chord progression position.
-            note_num += Scales::scale[global_scale_to_use][Scales::chordProgression[pads_chord_prog_to_use][div]];
+            note_num += pad_note_buffer[Scales::chordProgression[pads_chord_prog_to_use][div]];
             //add on the note to the chord with the set interval (interval used as scale index, not note number).
-            note_num = note_num + (Scales::scale[global_scale_to_use][chord * pads_chord_interval]);
+            note_num = note_num + (pad_note_buffer[chord * pads_chord_interval]);
             
             noteSequence[LAYER_PAD][noteSeqIndex].note_step_num = div * chord_length;
             noteSequence[LAYER_PAD][noteSeqIndex].note_chan = SEQ_PAD_CHAN;
@@ -259,7 +310,7 @@ void MidiGenerator::setSequenceData()
         noteSequence[LAYER_BASS][noteSeqIndex].note_step_num = div * chord_length;
         noteSequence[LAYER_BASS][noteSeqIndex].note_chan = SEQ_BASS_CHAN;
         //FIXME: should I make this note a further octave lower?
-        noteSequence[LAYER_BASS][noteSeqIndex].note_num = (global_root_note + Scales::scale[global_scale_to_use][Scales::chordProgression[pads_chord_prog_to_use][div]]) - 12;
+        noteSequence[LAYER_BASS][noteSeqIndex].note_num = (global_root_note + Scales::scale[global_scale_to_use][Scales::chordProgression[pads_chord_prog_to_use][div]]) - 24;
         noteSequence[LAYER_BASS][noteSeqIndex].note_vel = bass_main_velocity;
         noteSequence[LAYER_BASS][noteSeqIndex].note_length = chord_length; //FIXME: why don't we have bass note length?
         noteSeqIndex++;
@@ -429,7 +480,7 @@ void MidiGenerator::run()
             } //for (int i = 0; i < SEQ_MAX_NUM_OF_NOTES; i++)
             
             //==================================================================================
-            std::cout << step_num << " ";
+            //std::cout << step_num << " ";
             
             //increase step_num so we process the next
             step_num++;
