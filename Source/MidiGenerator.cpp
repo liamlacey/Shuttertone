@@ -51,11 +51,11 @@ void MidiGenerator::setSequenceData()
     
     //melody
     int melody_num_of_octaves; //controls note range
-    //float melody_note_jump_freq; //note order - what form is this value in?
     int melody_main_velocity;
     int melody_velocity_offset; //dynamics - a larger offset means a larger range around the main velocity
     int melody_note_length; //in number of steps
     int melody_note_frequency;
+    int melody_note_rest_freq;
     
     //pads
     int pads_chord_prog_to_use;
@@ -102,8 +102,6 @@ void MidiGenerator::setSequenceData()
     melody_num_of_octaves = scaleValue(averageRed[IMG_SECTION_1], 0, 1.0, 1, 5);
     std::cout << "Melody number of octaves: " << melody_num_of_octaves << std::endl;
     
-    //melody_note_jump_freq //FIXME: how do I set this?
-    
     //use the saturation value to get the velocity value
     //FIXME: what range should I use here?
     melody_main_velocity = scaleValue(averageSaturation[IMG_SECTION_1], 0, 1.0, 30, 127);
@@ -123,6 +121,11 @@ void MidiGenerator::setSequenceData()
     //FIXME: what range should I use here?
     melody_note_frequency = scaleValue(averageHue[IMG_SECTION_1], 0, 1.0, 0, NUM_OF_NOTE_AMOUNTS-1);
     std::cout << "Melody note frequency: " << melody_note_frequency << std::endl;
+    
+    //use the green value to get frequency of rest in the melody
+    //FIXME: what rage should I use here?
+    melody_note_rest_freq = scaleValue(averageGreen[IMG_SECTION_1], 0, 1.0, 1, 16);
+    std::cout << "Melody rest frequency: " << melody_note_rest_freq << std::endl;
     
     //==================================================================================
     //Apply pad data values
@@ -228,25 +231,40 @@ void MidiGenerator::setSequenceData()
     //=====================================
     //add notes to sequence array
     
+    int rest_counter = 0;
+    
     //iterate for loop by the set noteAmount (so it doesn't just go up in 1's and be placed on every step)
     for (int i = 0; i < SEQ_MAX_NUM_OF_STEPS; i += noteAmount[melody_note_frequency])
     {
-        //get a random note from note_buffer
-        int note_index = randomGen.nextInt(mel_note_buffer_size-1);
-        int note_num = mel_note_buffer[note_index];
+        //if we don't want to place a 'rest' here
+        //FIXME: ideally 'rest' should be placed in random values rather than in a particular order.
+        //This will do for now though!
+        if (rest_counter != melody_note_rest_freq)
+        {
+            //get a random note from note_buffer
+            int note_index = randomGen.nextInt(mel_note_buffer_size-1);
+            int note_num = mel_note_buffer[note_index];
+            
+            //generate random velocity value based on main velocity and velocity offset
+            int vel = melody_main_velocity + randomGen.nextInt(melody_velocity_offset);
+            if (vel > 127)
+                vel = 127;
+            
+            //add notes to sequence
+            noteSequence[LAYER_MELODY][noteSeqIndex].note_step_num = i;
+            noteSequence[LAYER_MELODY][noteSeqIndex].note_chan = SEQ_MELODY_CHAN;
+            noteSequence[LAYER_MELODY][noteSeqIndex].note_num = note_num;
+            noteSequence[LAYER_MELODY][noteSeqIndex].note_vel = vel;
+            noteSequence[LAYER_MELODY][noteSeqIndex].note_length = melody_note_length;
+            noteSeqIndex++;
+            rest_counter++;
+        }
+        else
+        {
+            rest_counter = 0;
+        }
         
-        //generate random velocity value based on main velocity and velocity offset
-        int vel = melody_main_velocity + randomGen.nextInt(melody_velocity_offset);
-        if (vel > 127)
-            vel = 127;
         
-        //add notes to sequence
-        noteSequence[LAYER_MELODY][noteSeqIndex].note_step_num = i;
-        noteSequence[LAYER_MELODY][noteSeqIndex].note_chan = SEQ_MELODY_CHAN;
-        noteSequence[LAYER_MELODY][noteSeqIndex].note_num = note_num;
-        noteSequence[LAYER_MELODY][noteSeqIndex].note_vel = vel;
-        noteSequence[LAYER_MELODY][noteSeqIndex].note_length = melody_note_length;
-        noteSeqIndex++;
         
     }
     
