@@ -53,9 +53,9 @@ enum SequencerLayers
 #define NO_NOTE -1
 
 #define NOTE_NUM_KICK 36
-#define NOTE_NUM_SNARE 37
-#define NOTE_NUM_PERC1 38
-#define NOTE_NUM_PERC2 39
+#define NOTE_NUM_SNARE 38
+#define NOTE_NUM_PERC1 37
+#define NOTE_NUM_PERC2 43
 
 
 class MidiGenerator : public Thread
