@@ -196,7 +196,7 @@ void MidiGenerator::setSequenceData()
     
     //use the brightness value to get the velocity offset for dynamic range
     //FIXME: what range should I use here?
-    drums_velocity_offset = scaleValue(averageBrightness[IMG_SECTION_4], 0, 1.0, 0, 30);
+    drums_velocity_offset = scaleValue(averageBrightness[IMG_SECTION_4], 0, 1.0, 0, 45);
     std::cout << "Drums velocity offset: " << drums_velocity_offset << std::endl;
     
     //==================================================================================
