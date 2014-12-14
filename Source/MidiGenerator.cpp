@@ -37,6 +37,10 @@ void MidiGenerator::setSequenceData()
             noteSequence[layer][note].note_step_num = NO_NOTE;
         }
     }
+    
+    //create a random number generator for various uses below
+    Random randomGen(Time::currentTimeMillis());
+    
     //==================================================================================
     //init varibles that determines what notes are stored into noteSequence
     
@@ -205,7 +209,6 @@ void MidiGenerator::setSequenceData()
     //How the hell do I do this?
     
     //TODO: could do with getting a 'number/freq of rests' parameter??
-    //TODO: implement velocity dynamics
     
     //=====================================
     //create buffer of notes to use based on root note, scale, and num of octaves.
@@ -224,9 +227,6 @@ void MidiGenerator::setSequenceData()
     
     noteSeqIndex = 0;
     
-    //create a random number generator for choosing an index of note_buffer
-    Random randomGen(Time::currentTimeMillis());
-    
     //=====================================
     //add notes to sequence array
     
@@ -237,11 +237,16 @@ void MidiGenerator::setSequenceData()
         int note_index = randomGen.nextInt(mel_note_buffer_size-1);
         int note_num = mel_note_buffer[note_index];
         
+        //generate random velocity value based on main velocity and velocity offset
+        int vel = melody_main_velocity + randomGen.nextInt(melody_velocity_offset);
+        if (vel > 127)
+            vel = 127;
+        
         //add notes to sequence
         noteSequence[LAYER_MELODY][noteSeqIndex].note_step_num = i;
         noteSequence[LAYER_MELODY][noteSeqIndex].note_chan = SEQ_MELODY_CHAN;
         noteSequence[LAYER_MELODY][noteSeqIndex].note_num = note_num;
-        noteSequence[LAYER_MELODY][noteSeqIndex].note_vel = melody_main_velocity;
+        noteSequence[LAYER_MELODY][noteSeqIndex].note_vel = vel;
         noteSequence[LAYER_MELODY][noteSeqIndex].note_length = melody_note_length;
         noteSeqIndex++;
         
@@ -327,7 +332,7 @@ void MidiGenerator::setSequenceData()
     
     for (int step = 0; step < DRUM_PATTERN_LENGTH; step++)
     {
-        //TODO: here for each drum, apply velocity dynamics and offbeat
+        //TODO: here for each drum, apply offbeat (but only on perc?)
         
         for (int repeat = 0; repeat < repeat_val; repeat++)
         {
@@ -335,10 +340,13 @@ void MidiGenerator::setSequenceData()
             
             if (DrumPatterns::kickPattern[drums_kick_pattern_to_use][step] == 1)
             {
+                //generate random velocity value based on main velocity and velocity offset
+                int vel = drums_main_velocity + randomGen.nextInt(drums_velocity_offset);
+                
                 noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
                 noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_KICK;
-                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = vel;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
                 
                 noteSeqIndex++;
@@ -348,10 +356,15 @@ void MidiGenerator::setSequenceData()
             
             if (DrumPatterns::snarePattern[drums_snare_pattern_to_use][step] == 1)
             {
+                //generate random velocity value based on main velocity and velocity offset
+                int vel = drums_main_velocity + randomGen.nextInt(drums_velocity_offset);
+                if (vel > 127)
+                    vel = 127;
+                
                 noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
                 noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_SNARE;
-                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = vel;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
                 
                 noteSeqIndex++;
@@ -359,10 +372,15 @@ void MidiGenerator::setSequenceData()
             
             if (DrumPatterns::perc1Pattern[drums_perc1_pattern_to_use][step] == 1)
             {
+                //generate random velocity value based on main velocity and velocity offset
+                int vel = drums_main_velocity + randomGen.nextInt(drums_velocity_offset);
+                if (vel > 127)
+                    vel = 127;
+                
                 noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
                 noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC1;
-                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = vel;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
                 
                 noteSeqIndex++;
@@ -370,10 +388,15 @@ void MidiGenerator::setSequenceData()
             
             if (DrumPatterns::perc2Pattern[drums_perc2_pattern_to_use][step] == 1)
             {
+                //generate random velocity value based on main velocity and velocity offset
+                int vel = drums_main_velocity + randomGen.nextInt(drums_velocity_offset);
+                if (vel > 127)
+                    vel = 127;
+                
                 noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
                 noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC2;
-                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = drums_main_velocity;
+                noteSequence[LAYER_PERC][noteSeqIndex].note_vel = vel;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_length = 4; //FIXME: is 4 ok from drums?
                 
                 noteSeqIndex++;
