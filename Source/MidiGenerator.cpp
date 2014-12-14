@@ -206,7 +206,6 @@ void MidiGenerator::setSequenceData()
     
     //==================================================================================
     //Add notes to melody sequence
-    //How the hell do I do this?
     
     //TODO: could do with getting a 'number/freq of rests' parameter??
     
@@ -332,8 +331,6 @@ void MidiGenerator::setSequenceData()
     
     for (int step = 0; step < DRUM_PATTERN_LENGTH; step++)
     {
-        //TODO: here for each drum, apply offbeat (but only on perc?)
-        
         for (int repeat = 0; repeat < repeat_val; repeat++)
         {
             //add kick pattern
@@ -377,7 +374,12 @@ void MidiGenerator::setSequenceData()
                 if (vel > 127)
                     vel = 127;
                 
-                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
+                //change the step number based on the offbeat value
+                int step_num = step + drums_offbeat_value;
+                if (step_num >= SEQ_MAX_NUM_OF_STEPS)
+                    step -= SEQ_MAX_NUM_OF_STEPS;
+                
+                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step_num + (repeat * DRUM_PATTERN_LENGTH);
                 noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC1;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_vel = vel;
@@ -393,7 +395,12 @@ void MidiGenerator::setSequenceData()
                 if (vel > 127)
                     vel = 127;
                 
-                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step + (repeat * DRUM_PATTERN_LENGTH);
+                //change the step number based on the offbeat value
+                int step_num = step + drums_offbeat_value;
+                if (step_num >= SEQ_MAX_NUM_OF_STEPS)
+                    step -= SEQ_MAX_NUM_OF_STEPS;
+                
+                noteSequence[LAYER_PERC][noteSeqIndex].note_step_num = step_num + (repeat * DRUM_PATTERN_LENGTH);
                 noteSequence[LAYER_PERC][noteSeqIndex].note_chan = SEQ_PERC_CHAN;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_num = NOTE_NUM_PERC2;
                 noteSequence[LAYER_PERC][noteSeqIndex].note_vel = vel;
