@@ -82,7 +82,6 @@ void MidiGenerator::setSequenceData()
     
     //use the hue value to get a root note
     //FIXME: what range should root note be in?
-    //FIXME: change this to use a different colour value?
     global_root_note = scaleValue(averageHue[GLOBAL_SECTION], 0, 1.0, 36, 84);
     std::cout << "Global root note: " << global_root_note << std::endl;
     
@@ -258,11 +257,10 @@ void MidiGenerator::setSequenceData()
     
     //note numbers applied here are the global root note + the index of the chosen scale relating to the values of the chosen chord progression.
     
-    //TODO: and note lengths
+    //TODO: note lengths?
     
     //It might be possible for high pad notes to go out of bounds of the scale.
     //Create a new temp scale here based on the set scale, but which includes a few more octaves (currently 5)
-    
     Array<int>pad_note_buffer;
     //int pad_note_buffer_size = SCALE_LENGTH * 5;
     
