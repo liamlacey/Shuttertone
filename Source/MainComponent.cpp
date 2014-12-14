@@ -31,10 +31,18 @@ MainContentComponent::MainContentComponent()
     playButton->setClickingTogglesState(true);
     playButton->setButtonText("Play");
     playButton->addListener(this);
+    playButton->setColour(TextButton::buttonColourId, Colours::wheat);
+    playButton->setColour(TextButton::buttonOnColourId, Colours::red);
     
     addAndMakeVisible(loadImageButton = new TextButton());
     loadImageButton->setButtonText("Load Image");
     loadImageButton->addListener(this);
+    loadImageButton->setColour(TextButton::buttonColourId, Colours::wheat);
+    
+    addAndMakeVisible(fileNameLabel = new Label());
+    fileNameLabel->setColour(Label::textColourId, Colours::wheat);
+    fileNameLabel->setJustificationType(Justification::centred);
+    fileNameLabel->setText("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg", dontSendNotification);
     
     
     setSize (1000, 700);
@@ -57,6 +65,7 @@ void MainContentComponent::resized()
     
     loadImageButton->setBounds((getWidth()/2) - 110, getHeight() - 50, 100, 40);
     playButton->setBounds((getWidth()/2) +10, getHeight() - 50, 100, 40);
+    fileNameLabel->setBounds(0, getHeight()-90, getWidth(), 20);
 }
 
 void MainContentComponent::buttonClicked (Button *button)
@@ -89,6 +98,7 @@ void MainContentComponent::buttonClicked (Button *button)
         {
             image = ImageCache::getFromFile(myChooser.getResult());
             imageComponent->setImage(image);
+            fileNameLabel->setText(myChooser.getResult().getFullPathName(), dontSendNotification);
             
             //get colour data from new image and generate sequence data from it
             analyseImage();

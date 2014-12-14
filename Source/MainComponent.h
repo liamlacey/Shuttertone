@@ -51,6 +51,8 @@ private:
     
     ScopedPointer <ImageComponent> imageComponent;
     
+    ScopedPointer<Label> fileNameLabel;
+    
     //=========================================
     //Backend/MIDI stuff...
     ScopedPointer<MidiGenerator> midiGenerator;
