@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DAC88958338867D0A3958F67"
                BuildableName = "MusicHackday2014Project.app"
-               BlueprintName = "Shuttertone"
+               BlueprintName = "Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename"
                ReferencedContainer = "container:Shuttertone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DAC88958338867D0A3958F67"
             BuildableName = "MusicHackday2014Project.app"
-            BlueprintName = "Shuttertone"
+            BlueprintName = "Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename"
             ReferencedContainer = "container:Shuttertone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -44,7 +44,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
@@ -53,7 +53,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DAC88958338867D0A3958F67"
             BuildableName = "MusicHackday2014Project.app"
-            BlueprintName = "Shuttertone"
+            BlueprintName = "Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename"
             ReferencedContainer = "container:Shuttertone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,7 +71,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DAC88958338867D0A3958F67"
             BuildableName = "MusicHackday2014Project.app"
-            BlueprintName = "Shuttertone"
+            BlueprintName = "Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename"
             ReferencedContainer = "container:Shuttertone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

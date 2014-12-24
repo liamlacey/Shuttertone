@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0346B15C6DE6B44988406182 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A64B3F303161B4DCC8F1412 /* AudioToolbox.framework */; };
 		0A11FAE59775499919D6CF94 /* juce_gui_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06F4FDB73092AF00DD4E16BB /* juce_gui_basics.mm */; };
+		0CB829111A4B7FCE00C5B57B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 643C4546C7F54D15B65AE835 /* Info.plist */; };
 		193C051CAD25469430A1CEEA /* juce_audio_processors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194A169A690EEA6D746BA830 /* juce_audio_processors.mm */; };
 		1D5E4A192EB3671EE975F34C /* juce_opengl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AB7C0B8FFAED493FFD6258C /* juce_opengl.mm */; };
 		262144F8DCBF273812FA4BB7 /* juce_video.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44A261925A4E3C55129D3B2B /* juce_video.mm */; };
@@ -2652,9 +2653,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DAC88958338867D0A3958F67 /* Shuttertone */ = {
+		DAC88958338867D0A3958F67 /* Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "Shuttertone" */;
+			buildConfigurationList = 5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename" */;
 			buildPhases = (
 				49AC77808E3E4D4F4AB25E08 /* Resources */,
 				4C4EF114AD8744B313F6B88B /* Sources */,
@@ -2664,7 +2665,7 @@
 			);
 			dependencies = (
 			);
-			name = Shuttertone;
+			name = Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename;
 			productInstallPath = "$(HOME)/Applications";
 			productName = Shuttertone;
 			productReference = 970431FDA8BC8B1307CBFF12 /* MusicHackday2014Project.app */;
@@ -2689,7 +2690,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DAC88958338867D0A3958F67 /* Shuttertone */,
+				DAC88958338867D0A3958F67 /* Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename */,
 			);
 		};
 /* End PBXProject section */
@@ -2699,6 +2700,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB829111A4B7FCE00C5B57B /* Info.plist in Resources */,
 				EAC238554B0B50D86790F785 /* RecentFilesMenuTemplate.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2757,9 +2759,9 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				SDKROOT_ppc = macosx10.5;
 			};
 			name = Debug;
@@ -2791,9 +2793,9 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				SDKROOT_ppc = macosx10.5;
 			};
 			name = Release;
@@ -2813,6 +2815,7 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = MusicHackday2014Project;
+				SDKROOT = macosx10.9;
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
@@ -2834,6 +2837,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = MusicHackday2014Project;
+				SDKROOT = macosx10.9;
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
@@ -2842,7 +2846,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "Shuttertone" */ = {
+		5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "Shuttertone.temp_caseinsensitive_rename.temp_caseinsensitive_rename" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				17D83C816AC1BF8379D0095B /* Debug */,
