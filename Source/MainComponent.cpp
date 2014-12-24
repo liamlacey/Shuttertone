@@ -16,10 +16,6 @@ MainContentComponent::MainContentComponent()
     midiGenerator = new MidiGenerator();
     
     image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg"));
-    //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(24).jpg"));
-    //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(27).jpg"));
-    //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(55).jpg"));
-    //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(135).jpg"));
 
     //get colour data from image and generate sequence data from it
     analyseImage();
@@ -91,7 +87,7 @@ void MainContentComponent::buttonClicked (Button *button)
     else if (button == loadImageButton)
     {
         FileChooser myChooser ("Please select an image to load...",
-                               File("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/"),
+                               File("/Users/Liam/Desktop/Images"),
                                "*.jpeg;*.jpg;*.png");
         
         if (myChooser.browseForFileToOpen())
@@ -125,31 +121,6 @@ void MainContentComponent::analyseImage()
     int sectionStartY[NUM_IMG_SECTIONS];
     int sectionEndX[NUM_IMG_SECTIONS];
     int sectionEndY[NUM_IMG_SECTIONS];
-    
-    //    //positions for dividing image into corners
-    //    //section 1 (top left)
-    //    sectionStartX[0] = 0;
-    //    sectionStartY[0] = 0;
-    //    sectionEndX[0] = imageWidth / 2;
-    //    sectionEndY[0] = imageHeight / 2;
-    //
-    //    //section 2 (top right)
-    //    sectionStartX[1] = imageWidth / 2;
-    //    sectionStartY[1] = 0;
-    //    sectionEndX[1] = imageWidth;
-    //    sectionEndY[1] = imageHeight / 2;
-    //
-    //    //section 3 (bottom left)
-    //    sectionStartX[2] = 0;
-    //    sectionStartY[2] = imageHeight / 2;
-    //    sectionEndX[2] = imageWidth / 2;
-    //    sectionEndY[2] = imageHeight;
-    //
-    //    //section 4 (bottom right)
-    //    sectionStartX[3] = imageWidth / 2;
-    //    sectionStartY[3] = imageHeight / 2;
-    //    sectionEndX[3] = imageWidth;
-    //    sectionEndY[3] = imageHeight;
     
     //positions for dividing image into horizontal strips
     //section 1 (top strip)
