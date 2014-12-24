@@ -41,7 +41,7 @@ MainContentComponent::MainContentComponent()
     fileNameLabel->setText("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg", dontSendNotification);
     
     
-    setSize (1000, 700);
+    setSize (800, 560);
     
     
 }
