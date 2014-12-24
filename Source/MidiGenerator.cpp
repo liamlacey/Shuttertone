@@ -428,7 +428,55 @@ void MidiGenerator::setSequenceData()
         } //for (int repeat = 0; repeat < repeat_val; repeat++)
         
     } //for (int step = 0; step < DRUM_PATTERN_LENGTH; step++)
- 
+    
+    //==================================================================================
+    //Sort arrays so that they are in ascending NoteMessageData.note_step_num order
+    //I'm using the Exchange Sort method - http://mathbits.com/MathBits/CompSci/Arrays/Sorting.htm
+
+    NoteMessageData temp;
+
+    // element to be compared
+    for (int i = 0; i < (SEQ_MAX_NUM_OF_NOTES - 1); i++)
+    {
+         // rest of the elements
+        for (int j = (i + 1); j < SEQ_MAX_NUM_OF_NOTES; j++)
+        {
+            // sort each layer
+            for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+            {
+                // ascending order
+                if (noteSequence[layer][i].note_step_num > noteSequence[layer][j].note_step_num)
+                {
+                    //swap
+                    temp = noteSequence[layer][i];
+                    noteSequence[layer][i] = noteSequence[layer][j];
+                    noteSequence[layer][j] = temp;
+                    
+                } //if (noteSequence[LAYER_PERC][i].note_step_num > noteSequence[LAYER_PERC][j].note_step_num)
+                
+            } //for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+            
+        } //for (int j = (i + 1); j < SEQ_MAX_NUM_OF_NOTES; j++)
+        
+    } //for (int i = 0; i < (SEQ_MAX_NUM_OF_NOTES - 1); i++)
+
+    //==================================================================================
+    //get the position of the first actual note in each array (first instance of non -1 (NO_NOTE))
+    
+    for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+    {
+        for (int note = 0; note < SEQ_MAX_NUM_OF_NOTES; note++)
+        {
+            if (noteSequence[layer][note].note_step_num != NO_NOTE)
+            {
+                startArrayPos[layer] = note;
+                break;
+            }
+            
+        } //for (int note = 0; note < SEQ_MAX_NUM_OF_NOTES; note++)
+        
+    } //for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+    
 }
 
 
@@ -443,6 +491,9 @@ void MidiGenerator::run()
     
     int current_time = Time::getMillisecondCounterHiRes();
     int step_num = 0;
+    
+    for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+        currentArrayPos[layer] = startArrayPos[layer];
     
     //With this array of NoteMessageData we don't use the length or vel params
     NoteMessageData note_off_buffer[SIZE_OF_NOTE_OFF_BUF];
@@ -459,8 +510,7 @@ void MidiGenerator::run()
         {
             //increase currentTime
              current_time += stepInterval;
-            
-            
+
             //==================================================================================
             //search through the note-off buffer for notes that need to be turned off on this step
             
@@ -473,57 +523,80 @@ void MidiGenerator::run()
                     MidiMessage midiMessage = MidiMessage::noteOff(note_off_buffer[i].note_chan, note_off_buffer[i].note_num);
                     sendMidiMessage(midiMessage);
                     
-                    //'remove' this note from the note-off buffer
-                    note_off_buffer[i].note_step_num = NO_NOTE;
+                    //'remove' this note from the note-off buffer by shuffling down the notes higher in the buffer
+                    for (int j = i; j < SIZE_OF_NOTE_OFF_BUF - 1; j++)
+                    {
+                        note_off_buffer[j] = note_off_buffer[j + 1];
+                    }
+                    
+                    //move i back one incase the moved next note needs turning off too.
+                    i--;
                     
                 } //if (note_off_buffer[i].note_step_num == step_num)
                 
+                //if we have reached the end of actual notes in the buffer, exit the loop
+                if (note_off_buffer[i].note_step_num == NO_NOTE)
+                    break;
+                
             } //for (int i = 0; i < SIZE_OF_NOTE_OFF_BUF; i++)
             
-            //==================================================================================
-            //search through sequence arrays for notes that need to be turned on on this step
             
-            for (int i = 0; i < SEQ_MAX_NUM_OF_NOTES; i++)
+            //==================================================================================
+            //search through the appropriate range of the sequence arrays for notes that need to be turned on on this step
+            
+            for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
             {
-                for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+                for (int i = currentArrayPos[layer]; i < SEQ_MAX_NUM_OF_NOTES; i++)
                 {
-                //if this object/note has a matching step number
-                if (noteSequence[layer][i].note_step_num == step_num)
-                {
-                    //play the note
-                    MidiMessage midiMessage = MidiMessage::noteOn(noteSequence[layer][i].note_chan,
-                                                                  noteSequence[layer][i].note_num,
-                                                                  (uint8)noteSequence[layer][i].note_vel);
-                    sendMidiMessage(midiMessage);
-                    
-                    //add this note to the note-off buffer
-                    for (int j = 0; j < SIZE_OF_NOTE_OFF_BUF; j++)
+                    //if this object/note has a matching step number
+                    if (noteSequence[layer][i].note_step_num == step_num)
                     {
-                        //if this index of note_off_buffer is currently not being used
-                        if (note_off_buffer[j].note_step_num == NO_NOTE)
-                        {
-                            //set the note_step_num to be the current step number + the notes length
-                            //<ay need to wrap round to the beggining for step number
-                            int off_step = step_num + noteSequence[layer][i].note_length;
-                            
-                            if (off_step >= SEQ_MAX_NUM_OF_STEPS)
-                                off_step -= SEQ_MAX_NUM_OF_STEPS;
-                            
-                            note_off_buffer[j].note_step_num = off_step;
-                            
-                            note_off_buffer[j].note_chan = noteSequence[layer][i].note_chan;
-                            note_off_buffer[j].note_num = noteSequence[layer][i].note_num;
-                            break;
-                            
-                        } //if (note_off_buffer[j].note_step_num == NO_NOTE)
+                        //play the note
+                        MidiMessage midiMessage = MidiMessage::noteOn(noteSequence[layer][i].note_chan,
+                                                                      noteSequence[layer][i].note_num,
+                                                                      (uint8)noteSequence[layer][i].note_vel);
+                        sendMidiMessage(midiMessage);
                         
-                    } //for (int j = 0; j < SIZE_OF_NOTE_OFF_BUF; j++)
+                        //add this note to the note-off buffer
+                        for (int j = 0; j < SIZE_OF_NOTE_OFF_BUF; j++)
+                        {
+                            //if this index of note_off_buffer is currently not being used
+                            if (note_off_buffer[j].note_step_num == NO_NOTE)
+                            {
+                                //set the note_step_num to be the current step number + the notes length
+                                //may need to wrap round to the beggining for step number
+                                int off_step = step_num + noteSequence[layer][i].note_length;
+                                
+                                if (off_step >= SEQ_MAX_NUM_OF_STEPS)
+                                    off_step -= SEQ_MAX_NUM_OF_STEPS;
+                                
+                                note_off_buffer[j].note_step_num = off_step;
+                                
+                                note_off_buffer[j].note_chan = noteSequence[layer][i].note_chan;
+                                note_off_buffer[j].note_num = noteSequence[layer][i].note_num;
+                                break;
+                                
+                            } //if (note_off_buffer[j].note_step_num == NO_NOTE)
+                            
+                        } //for (int j = 0; j < SIZE_OF_NOTE_OFF_BUF; j++)
+                        
+                    }//if (melodySequence[i].note_step_num == step_num)
                     
-                } //if (melodySequence[i].note_step_num == step_num)
+                    //if the step number doesn't match, we have finished processing all notes for this step...
+                    else
+                    {
+                       //...so store this step number, so for the next step we can start searching at this index in the array.
+                        
+                        currentArrayPos[layer] = i;
+                        //std::cout << currentArrayPos[layer] << std::endl;
+                        
+                        //break out of searching through this layers array
+                        break;
+                    }
                     
-                } //for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+                } //for (int i = currentArrayPos[layer]; i < SEQ_MAX_NUM_OF_NOTES; i++)
                 
-            } //for (int i = 0; i < SEQ_MAX_NUM_OF_NOTES; i++)
+            } //for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
             
             //==================================================================================
             //std::cout << step_num << " ";
@@ -531,13 +604,19 @@ void MidiGenerator::run()
             //increase step_num so we process the next
             step_num++;
             
+            //if we have reached the last step in the sequence, reset the needed variables/
             if (step_num >= SEQ_MAX_NUM_OF_STEPS)
+            {
                 step_num = 0;
+                
+                for (int layer = 0; layer < NUM_OF_LAYERS; layer++)
+                    currentArrayPos[layer] = startArrayPos[layer];
+            }
             
         } //if (Time::getMillisecondCounterHiRes() >= current_time)
         
-        //should I do this?
-        //wait(1);
+        //without adding a slight pause the CPU level is really high!
+        wait(1);
         
     } //while (!threadShouldExit())
     

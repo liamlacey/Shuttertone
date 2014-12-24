@@ -96,6 +96,11 @@ void MainContentComponent::buttonClicked (Button *button)
             imageComponent->setImage(image);
             fileNameLabel->setText(myChooser.getResult().getFullPathName(), dontSendNotification);
             
+            //stop the currently playing sequence
+            midiGenerator->stopThread(500);
+            playButton->setToggleState(false, dontSendNotification);
+            playButton->setButtonText("Play");
+            
             //get colour data from new image and generate sequence data from it
             analyseImage();
         }

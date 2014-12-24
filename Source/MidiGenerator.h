@@ -16,11 +16,10 @@
 
 //This is my first attempt at a struct for storing note data so we can play a sequence of notes.
 //When searching through arrays of this struct, it should only process the object/note
-//if the current time/step matches the step number. This method could prove to be CPU extensive
-//as for each step in the global seqeuence it will need to check all array objects for matching
-//values. Struggling to think of a better way though right now though!
-//We could optimse this method by sorting the arrays by note_step_num, and then this will make
-//it possible to only have to search through a particular range of the array, not the whole thing.
+//if the current time/step matches the step number.
+//I am sorting the arrays by note_step_num, so this makes
+//it possible to only have to search through a particular range of the array,
+//not the whole thing, which was very CPU intensive when I tried this.
 
 struct NoteMessageData
 {
@@ -109,6 +108,13 @@ private:
     NoteMessageData noteSequence[NUM_OF_LAYERS][SEQ_MAX_NUM_OF_NOTES];
     
     int stepInterval; //used as a tempo indicator
+    
+    //array that, during play time, stores the current position we are getting notes out of noteSequence for each layer.
+    //this is so that for each step we don't need to look through the entire length of each array (as this was causing very high CPU).
+    int currentArrayPos[NUM_OF_LAYERS];
+    //stores the first index of noteSequence that stores an actual note, as opposed to -1 (NO_NOTE), for each layer.
+    //used in conjuntion with the above array.
+    int startArrayPos[NUM_OF_LAYERS];
 };
 
 
