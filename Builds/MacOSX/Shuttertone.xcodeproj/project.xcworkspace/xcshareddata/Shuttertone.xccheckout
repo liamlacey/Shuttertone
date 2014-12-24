@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>58158BE1-55B6-48BE-85BB-A99E0DE411B9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Shuttertone</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BEB3A89E70D42117505F28F644FD08910D98E9F5</key>
+		<string>https://bitbucket.org/liamlacey/musichackday2014project.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Builds/MacOSX/Shuttertone.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BEB3A89E70D42117505F28F644FD08910D98E9F5</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/liamlacey/musichackday2014project.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BEB3A89E70D42117505F28F644FD08910D98E9F5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BEB3A89E70D42117505F28F644FD08910D98E9F5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MusicHackday2014Project</string>
+		</dict>
+	</array>
+</dict>
+</plist>

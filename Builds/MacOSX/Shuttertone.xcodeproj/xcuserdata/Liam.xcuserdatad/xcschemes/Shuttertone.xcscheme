@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DAC88958338867D0A3958F67"
                BuildableName = "MusicHackday2014Project.app"
-               BlueprintName = "MusicHackday2014Project"
-               ReferencedContainer = "container:MusicHackday2014Project.xcodeproj">
+               BlueprintName = "Shuttertone"
+               ReferencedContainer = "container:Shuttertone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DAC88958338867D0A3958F67"
             BuildableName = "MusicHackday2014Project.app"
-            BlueprintName = "MusicHackday2014Project"
-            ReferencedContainer = "container:MusicHackday2014Project.xcodeproj">
+            BlueprintName = "Shuttertone"
+            ReferencedContainer = "container:Shuttertone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -53,8 +53,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DAC88958338867D0A3958F67"
             BuildableName = "MusicHackday2014Project.app"
-            BlueprintName = "MusicHackday2014Project"
-            ReferencedContainer = "container:MusicHackday2014Project.xcodeproj">
+            BlueprintName = "Shuttertone"
+            ReferencedContainer = "container:Shuttertone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,8 +71,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DAC88958338867D0A3958F67"
             BuildableName = "MusicHackday2014Project.app"
-            BlueprintName = "MusicHackday2014Project"
-            ReferencedContainer = "container:MusicHackday2014Project.xcodeproj">
+            BlueprintName = "Shuttertone"
+            ReferencedContainer = "container:Shuttertone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

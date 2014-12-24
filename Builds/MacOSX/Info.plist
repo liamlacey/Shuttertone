@@ -8,19 +8,19 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.MusicHackday2014Project</string>
+    <string>com.glimmeraudio.shuttertone</string>
     <key>CFBundleName</key>
-    <string>MusicHackday2014Project</string>
+    <string>Shuttertone</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.0.1</string>
+    <string>1.0.0</string>
     <key>CFBundleVersion</key>
-    <string>0.0.1</string>
+    <string>1.0.0</string>
     <key>NSHumanReadableCopyright</key>
-    <string></string>
+    <string>Glimmer Audio</string>
     <key>NSHighResolutionCapable</key>
     <true/>
   </dict>

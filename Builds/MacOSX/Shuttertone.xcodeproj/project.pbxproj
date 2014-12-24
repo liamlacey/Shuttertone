@@ -2201,12 +2201,12 @@
 			name = juce_events;
 			sourceTree = "<group>";
 		};
-		A932FC18FD63704B12AEA8BC /* MusicHackday2014Project */ = {
+		A932FC18FD63704B12AEA8BC /* Shuttertone */ = {
 			isa = PBXGroup;
 			children = (
 				BD63055D5B69AFA2BA2FC140 /* Source */,
 			);
-			name = MusicHackday2014Project;
+			name = Shuttertone;
 			sourceTree = "<group>";
 		};
 		A965728195EA8FB1923E153E /* scanning */ = {
@@ -2290,12 +2290,12 @@
 		BD63055D5B69AFA2BA2FC140 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				7B07F364B0765C4996E1959A /* Scales&Patterns.h */,
 				331EF4ED1B75389056277C28 /* Main.cpp */,
 				0FD8B7306DA3F3F62BB9A1A6 /* MainComponent.h */,
 				1496C3E60BBA6A849744429E /* MainComponent.cpp */,
 				55DD57B0FE5A1E6DBEEDC70B /* MidiGenerator.h */,
 				247F4A893B75344A0768F852 /* MidiGenerator.cpp */,
-				7B07F364B0765C4996E1959A /* Scales&Patterns.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -2639,7 +2639,7 @@
 		FFC72F41CD2ED060CEB3997D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				A932FC18FD63704B12AEA8BC /* MusicHackday2014Project */,
+				A932FC18FD63704B12AEA8BC /* Shuttertone */,
 				0E6DD9157A38B528E2A44226 /* Juce Modules */,
 				4815A0CB7F14147373C5305A /* Juce Library Code */,
 				7A5FFF2237BF98F3EDE0F677 /* Resources */,
@@ -2652,9 +2652,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DAC88958338867D0A3958F67 /* MusicHackday2014Project */ = {
+		DAC88958338867D0A3958F67 /* Shuttertone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "MusicHackday2014Project" */;
+			buildConfigurationList = 5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "Shuttertone" */;
 			buildPhases = (
 				49AC77808E3E4D4F4AB25E08 /* Resources */,
 				4C4EF114AD8744B313F6B88B /* Sources */,
@@ -2664,9 +2664,9 @@
 			);
 			dependencies = (
 			);
-			name = MusicHackday2014Project;
+			name = Shuttertone;
 			productInstallPath = "$(HOME)/Applications";
-			productName = MusicHackday2014Project;
+			productName = Shuttertone;
 			productReference = 970431FDA8BC8B1307CBFF12 /* MusicHackday2014Project.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -2676,9 +2676,9 @@
 		F7AAC555040AC35FB3E47137 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0610;
 			};
-			buildConfigurationList = A5B5E2C675EC8E9A39CDC74A /* Build configuration list for PBXProject "MusicHackday2014Project" */;
+			buildConfigurationList = A5B5E2C675EC8E9A39CDC74A /* Build configuration list for PBXProject "Shuttertone" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2689,7 +2689,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DAC88958338867D0A3958F67 /* MusicHackday2014Project */,
+				DAC88958338867D0A3958F67 /* Shuttertone */,
 			);
 		};
 /* End PBXProject section */
@@ -2746,8 +2746,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=1.0.0",
+					"JUCE_APP_VERSION_HEX=0x10000",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
@@ -2759,7 +2759,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				SDKROOT = macosx10.10;
+				SDKROOT = macosx;
 				SDKROOT_ppc = macosx10.5;
 			};
 			name = Debug;
@@ -2767,7 +2767,6 @@
 		48747A41419CB875BA72496E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2779,8 +2778,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=1.0.0",
+					"JUCE_APP_VERSION_HEX=0x10000",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2794,7 +2793,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				SDKROOT = macosx10.10;
+				SDKROOT = macosx;
 				SDKROOT_ppc = macosx10.5;
 			};
 			name = Release;
@@ -2843,7 +2842,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "MusicHackday2014Project" */ = {
+		5CB200D6359E59BE470CDCE7 /* Build configuration list for PBXNativeTarget "Shuttertone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				17D83C816AC1BF8379D0095B /* Debug */,
@@ -2852,7 +2851,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A5B5E2C675EC8E9A39CDC74A /* Build configuration list for PBXProject "MusicHackday2014Project" */ = {
+		A5B5E2C675EC8E9A39CDC74A /* Build configuration list for PBXProject "Shuttertone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EAB030993CEA9EE707C4DFC3 /* Debug */,

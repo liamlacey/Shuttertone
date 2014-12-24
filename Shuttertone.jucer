@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="bmERS7" name="MusicHackday2014Project" projectType="guiapp"
-              version="0.0.1" bundleIdentifier="com.yourcompany.MusicHackday2014Project"
-              includeBinaryInAppConfig="1" jucerVersion="3.1.0">
-  <MAINGROUP id="z7sSgT" name="MusicHackday2014Project">
+<JUCERPROJECT id="bmERS7" name="Shuttertone" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.glimmeraudio.shuttertone" includeBinaryInAppConfig="1"
+              jucerVersion="3.1.0" companyName="Glimmer Audio" companyWebsite="http://liamtmlacey.tumblr.com"
+              companyEmail="liamlacey@hotmail.com">
+  <MAINGROUP id="z7sSgT" name="Shuttertone">
     <GROUP id="{B75A2A8B-CAE3-714B-5151-23A779C661CF}" name="Source">
       <FILE id="UWN2TO" name="Scales&amp;Patterns.h" compile="0" resource="0"
             file="Source/Scales&amp;Patterns.h"/>
