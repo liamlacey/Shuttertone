@@ -25,6 +25,8 @@ The application will work best if you apply relevant instruments to the correspo
 +   Percussion 1 - 37
 +   Percussion 2 - 43
 
+The above download link includes a demo Ableton Live 9 project to get you started.
+
 ## Future plans ##
 
 There are many things on my to-do list for this application:
