@@ -24,7 +24,8 @@ MidiGenerator::MidiGenerator()
 
 MidiGenerator::~MidiGenerator()
 {
-    
+    if (isThreadRunning())
+        stopThread(500);
 }
 
 void MidiGenerator::setSequenceData()
