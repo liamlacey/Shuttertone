@@ -22,8 +22,8 @@ The application outputs notes on four channels, each designed for a different la
 The application will work best if you apply relevant instruments to the corresponding channels/tracks in your DAW. For the pad track, Shuttertone may output chords/multiple notes, so it may not work if you chose an instrument that generates chords based on a single MIDI note. For the drum track, it uses the following four MIDI notes:
 +   36 - Kick
 +   38 - Snare
-+   Percussion 1 - 37
-+   Percussion 2 - 43
++   37 - Percussion 1
++   43 - Percussion 2
 
 The above download link includes a demo Ableton Live 9 project to get you started.
 
@@ -38,6 +38,7 @@ There are many things on my to-do list for this application:
 +   Add more note scales and chord progressions
 +   Increase the length of the repeating pattern.
 +   Allow the sequences to change and evolve over time
++   Create an internal sound engine for standalone usage
 +   Allow slideshows of images to be added
 +   Add video analysis
 +   Use the application as a starting point for creating a C++ library for creating generative music applications
