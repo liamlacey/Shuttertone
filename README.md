@@ -3,7 +3,7 @@
 Shuttertone is an open-source generative music application that uses colour data from images to generate multi-layered sequences of music that are output as a realtime stream of MIDI note messages.
 
 You can download the application from: https://github.com/liamlacey/Shuttertone/releases. <br>
-It's currently only available on Mac OS X version 10.9 and above. Windows and OS X pre-10.9 versions coming soon.
+It's currently only available on Mac OS X (version 10.6 and above). Windows version coming soon.
 
 This application was originally built for [Music Hackday London 2014](https://www.hackerleague.org/hackathons/music-hack-day-london-2014/hacks/shuttertune). 
 
