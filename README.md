@@ -36,6 +36,7 @@ There are many things on my to-do list for this application:
 +   Tinker with the musical parameter ranges to widen the variety of output
 +   Improve the UI so that you can edit MIDI channels, MIDI notes for drum sequence, mappings, image division etc...
 +   Add more note scales and chord progressions
++   Increase the length of the repeating pattern.
 +   Allow the sequences to change and evolve over time
 +   Allow slideshows of images to be added
 +   Add video analysis
@@ -48,6 +49,7 @@ The application works in the following way: <br>
 2. The image is split into four horizontal strips, and the average value of each of the above types of data is worked out, as well as an average of each value for the entire image. <br>
 3. A number of these average values are then mapped to a set of musical parameters (see below). Each of the four sections of the image relates to one of the four layers of the generated sequence, with the global values mapped to global sequence parameters. <br>
 4. These musical parameter values are used to create a particular sequence of notes. The sequence of notes does not change until you load a different image into the application. <br>
+5. This will then play a repeating 4 bar piece of music. <br>
 
 Here is the currently mapping of data:
 +   Global - Root note - hue
