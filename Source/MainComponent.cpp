@@ -11,17 +11,10 @@
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
-                        
 {
     midiGenerator = std::make_unique<MidiGenerator>();
     
-    //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg"));
-
-    //get colour data from image and generate sequence data from it
-    //analyseImage();
-    
     addAndMakeVisible(&imageComponent);
-    //imageComponent->setImage (image);
     
     addAndMakeVisible(&playButton);
     playButton.setClickingTogglesState(true);
@@ -40,12 +33,8 @@ MainContentComponent::MainContentComponent()
     addAndMakeVisible(&fileNameLabel);
     fileNameLabel.setColour(Label::textColourId, Colours::wheat);
     fileNameLabel.setJustificationType(Justification::centred);
-    //fileNameLabel->setText("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg", dontSendNotification);
-    
     
     setSize (800, 560);
-    
-    
 }
 
 MainContentComponent::~MainContentComponent()
@@ -92,7 +81,7 @@ void MainContentComponent::buttonClicked (Button *button)
         playButton.setAlpha(0.5);
         
         FileChooser myChooser ("Please select an image to load...",
-                               File("/Users/Liam/Desktop/Images"),
+                               File::getSpecialLocation(File::userPicturesDirectory),
                                "*.jpeg;*.jpg;*.png");
         
         if (myChooser.browseForFileToOpen())
