@@ -643,7 +643,11 @@ void MidiGenerator::run()
 
 void MidiGenerator::sendMidiMessage (MidiMessage midiMessage)
 {
-    midiOutputDevice->sendBlockOfMessages(MidiBuffer(midiMessage), Time::getMillisecondCounter(), 44100);
+    if (midiOutputDevice != nullptr)
+    {
+        midiOutputDevice->sendMessageNow(midiMessage);
+        //midiOutputDevice->sendBlockOfMessages(MidiBuffer(midiMessage), Time::getMillisecondCounter(), 44100);
+    }
 }
 
 
