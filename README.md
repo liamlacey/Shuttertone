@@ -3,11 +3,11 @@
 Shuttertone is an open-source generative music application that uses colour data from images to generate multi-layered sequences of music that are output as a realtime stream of MIDI note messages.
 
 You can download the application from: https://github.com/liamlacey/Shuttertone/releases. <br>
-It's currently only available on Mac OS X (version 10.6 and above). Windows version coming soon.
+It's available for macOS (version 10.7 and above) and Windows (version 10). <br>
 
 This application was originally built for [Music Hackday London 2014](https://www.hackerleague.org/hackathons/music-hack-day-london-2014/hacks/shuttertune). 
 
-Shuttertone has been programmed using the [JUCE](http://www.rawmaterialsoftware.com/juce.php) cross-platform C++ library, and includes an Xcode project for building on Mac OS X. JUCE also easily allows you to create a Visual Studio 2010 project for building on Windows, and makefile to build for Linux.
+Shuttertone has been programmed using the [JUCE](https://juce.com) cross-platform C++ library, and includes an Xcode project for building on macOS and a Visual Studio 2019 project for building on Windows. JUCE also easily allows you to create a makefile to build for Linux.
 
 ## How to use ##
 
@@ -30,7 +30,6 @@ The above download link includes a demo Ableton Live 9 project to get you starte
 ## Future plans ##
 
 There are many things on my to-do list for this application:
-+   Build a version for Windows
 +   Tinker with the mappings of colour data to music parameters to make it more meaningful
 +   Add more mappings
 +   Tinker with the musical parameter ranges to widen the variety of output
@@ -79,7 +78,7 @@ In regards to the sections of the image and their mappings to the layers of musi
 
 ## License ##
 
-Shuttertone is licensed under the GPLv2. LICENSE.txt for details.
+Shuttertone is licensed under the GPLv3. LICENSE.txt for details.
 
 The following libraries are included in the source code:
-+  The [JUCE](http://www.rawmaterialsoftware.com/juce.php) library which is licensed under the GPLv2.
++  The [JUCE](https://juce.com) library which is licensed under the GPLv3.
