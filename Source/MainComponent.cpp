@@ -34,6 +34,31 @@ MainContentComponent::MainContentComponent()
     fileNameLabel.setColour(Label::textColourId, Colours::wheat);
     fileNameLabel.setJustificationType(Justification::centred);
     
+    addAndMakeVisible(&midiOutputComboBox);
+    midiOutputComboBox.addListener(this);
+    
+    auto midiOutputDeviceListNames = midiGenerator->getMidiOutputListNames();
+    
+    for (int i = 0; i < midiOutputDeviceListNames.size(); i++)
+    {
+#if JUCE_MAC || JUCE_LINUX || JUCE_IOS
+        if (i == midiOutputDeviceListNames.size() - 1)
+            midiOutputComboBox.addSeparator();
+#endif
+        midiOutputComboBox.addItem (midiOutputDeviceListNames[i], i + 1);
+    }
+    
+#if JUCE_MAC || JUCE_LINUX || JUCE_IOS
+    midiOutputComboBox.setSelectedItemIndex (midiOutputComboBox.getNumItems() - 1, sendNotification);
+#else
+    midiOutputComboBox.setSelectedItemIndex (0, sendNotification);
+#endif
+    
+    addAndMakeVisible(&midiOutputLabel);
+    midiOutputLabel.setText("MIDI Ouput:", dontSendNotification);
+    midiOutputLabel.setColour(Label::textColourId, Colours::wheat);
+    midiOutputLabel.setJustificationType(Justification::centred);
+    
     setSize (800, 560);
 }
 
@@ -53,6 +78,9 @@ void MainContentComponent::resized()
     loadImageButton.setBounds((getWidth()/2) - 110, getHeight() - 50, 100, 40);
     playButton.setBounds((getWidth()/2) +10, getHeight() - 50, 100, 40);
     fileNameLabel.setBounds(0, getHeight()-90, getWidth(), 20);
+    
+    midiOutputComboBox.setBounds (getWidth() - 160, getHeight() - 45, 150, 20);
+    midiOutputLabel.setBounds (getWidth() - 260, getHeight() - 45, 100, 20);
 }
 
 void MainContentComponent::buttonClicked (Button *button)
@@ -108,6 +136,13 @@ void MainContentComponent::buttonClicked (Button *button)
     }
 }
 
+void MainContentComponent::comboBoxChanged (ComboBox* comboBox)
+{
+    if (comboBox == &midiOutputComboBox)
+    {
+        midiGenerator->setMidiOutputDevice (comboBox->getSelectedItemIndex());
+    }
+}
 
 void MainContentComponent::analyseImage()
 {

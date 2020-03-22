@@ -73,6 +73,9 @@ public:
     
     void sendMidiMessage (MidiMessage midiMessage);
     
+    void setMidiOutputDevice (int deviceListIndex);
+    StringArray getMidiOutputListNames();
+    
     void setAverageRed (int section_num, float value);
     void setAverageGreen (int section_num, float value);
     void setAverageBlue (int section_num, float value);
@@ -92,8 +95,10 @@ public:
 private:
     //==============================================================================
     
-    //virtual MIDI output device
+    //MIDI output device stuff...
     std::unique_ptr<MidiOutput> midiOutputDevice;
+    Array <MidiDeviceInfo> midiDeviceInfoArray;
+    int virtualMidiOuputDeviceIndex = -1;
     
     //variables to store the average colour values for each image section (including a whole-image average)
     float averageRed[NUM_IMG_SECTIONS + 1];

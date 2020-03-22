@@ -13,13 +13,14 @@
 MidiGenerator::MidiGenerator()
             : Thread("MIDI output Generator")
 {
-    //Create a virtual MIDI output device
-    midiOutputDevice = MidiOutput::createNewDevice("Shuttertone App");
+    midiDeviceInfoArray = MidiOutput::getAvailableDevices();
     
-    if(midiOutputDevice)
-        midiOutputDevice->startBackgroundThread();
-    else
-        std::cout << "Failed to create a virtual MIDI output device!" << std::endl;
+    //on macOS / Linux / iOS set the internal device index
+    //for the virtual MIDI device to be at the end of the
+    //system device list
+#if JUCE_MAC || JUCE_LINUX || JUCE_IOS
+    virtualMidiOuputDeviceIndex = midiDeviceInfoArray.size();
+#endif
 }
 
 MidiGenerator::~MidiGenerator()
@@ -650,6 +651,47 @@ void MidiGenerator::sendMidiMessage (MidiMessage midiMessage)
     }
 }
 
+void MidiGenerator::setMidiOutputDevice (int deviceListIndex)
+{
+    if (midiOutputDevice != nullptr)
+        midiOutputDevice->stopBackgroundThread();
+    
+    if (deviceListIndex == virtualMidiOuputDeviceIndex)
+    {
+        //Create a virtual MIDI output device
+        midiOutputDevice = MidiOutput::createNewDevice("Shuttertone App");
+    }
+    else
+    {
+        //Open a system MIDI device
+        midiOutputDevice = MidiOutput::openDevice(midiDeviceInfoArray[deviceListIndex].identifier);
+    }
+    
+    if(midiOutputDevice)
+        midiOutputDevice->startBackgroundThread();
+    else
+        std::cout << "Failed to create or open a MIDI output device!" << std::endl;
+    
+}
+
+//Function that returns names for the UI MIDI device list,
+//where on macOS/Linux/iOS the virtual MIDI device option
+//is at the end of the list.
+StringArray MidiGenerator::getMidiOutputListNames()
+{
+    StringArray midiOutputList;
+    
+    for (auto i = 0; i < midiDeviceInfoArray.size(); i++)
+    {
+        midiOutputList.add (midiDeviceInfoArray[i].name);
+    }
+    
+#if JUCE_MAC || JUCE_LINUX || JUCE_IOS
+    midiOutputList.add ("Virtual Output");
+#endif
+    
+    return midiOutputList;
+}
 
 void MidiGenerator::setAverageRed (int section_num, float value)
 {

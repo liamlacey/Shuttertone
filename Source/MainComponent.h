@@ -18,7 +18,8 @@
     your controls and content.
 */
 class MainContentComponent   :  public Component,
-                                public Button::Listener
+                                public Button::Listener,
+                                public ComboBox::Listener
 {
 public:
     //==============================================================================
@@ -28,15 +29,15 @@ public:
     //=========================================
     //GUI stuff...
     
-    void paint (Graphics&);
-    void resized();
+    void paint (Graphics&) override;
+    void resized() override;
     
-    void buttonClicked (Button *button);
+    void buttonClicked (Button *button) override;
+    void comboBoxChanged (ComboBox* comboBox) override;
     
     //=========================================
     //Backend stuff...
     void analyseImage();
-    
 
 private:
     //==============================================================================
@@ -51,7 +52,10 @@ private:
     
     ImageComponent imageComponent;
     
-   Label fileNameLabel;
+    Label fileNameLabel;
+    
+    ComboBox midiOutputComboBox;
+    Label midiOutputLabel;
     
     //=========================================
     //Backend/MIDI stuff...
