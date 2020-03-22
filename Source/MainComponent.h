@@ -43,23 +43,21 @@ private:
     
     //=========================================
     //GUI/Image stuff...
-    ScopedPointer <TextButton> playButton;
-    ScopedPointer<TextButton> loadImageButton;
+    TextButton playButton;
+    TextButton loadImageButton;
     
     Image image;
     int imageWidth, imageHeight;
     
-    ScopedPointer <ImageComponent> imageComponent;
+    ImageComponent imageComponent;
     
-    ScopedPointer<Label> fileNameLabel;
+   Label fileNameLabel;
     
     //=========================================
     //Backend/MIDI stuff...
-    ScopedPointer<MidiGenerator> midiGenerator;
-    
+    std::unique_ptr<MidiGenerator> midiGenerator;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
-
 
 #endif  // MAINCOMPONENT_H_INCLUDED

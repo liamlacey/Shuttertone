@@ -93,7 +93,7 @@ private:
     //==============================================================================
     
     //virtual MIDI output device
-    ScopedPointer<MidiOutput> midiOutputDevice;
+    std::unique_ptr<MidiOutput> midiOutputDevice;
     
     //variables to store the average colour values for each image section (including a whole-image average)
     float averageRed[NUM_IMG_SECTIONS + 1];

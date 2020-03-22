@@ -14,7 +14,7 @@ MidiGenerator::MidiGenerator()
             : Thread("MIDI output Generator")
 {
     //Create a virtual MIDI output device
-    midiOutputDevice = MidiOutput::createNewDevice("Generative MIDI App");
+    midiOutputDevice = MidiOutput::createNewDevice("Shuttertone App");
     
     if(midiOutputDevice)
         midiOutputDevice->startBackgroundThread();

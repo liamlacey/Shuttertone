@@ -13,33 +13,33 @@
 MainContentComponent::MainContentComponent()
                         
 {
-    midiGenerator = new MidiGenerator();
+    midiGenerator = std::make_unique<MidiGenerator>();
     
     //image = ImageCache::getFromFile (File ("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg"));
 
     //get colour data from image and generate sequence data from it
     //analyseImage();
     
-    addAndMakeVisible(imageComponent = new ImageComponent());
+    addAndMakeVisible(&imageComponent);
     //imageComponent->setImage (image);
     
-    addAndMakeVisible(playButton = new TextButton());
-    playButton->setClickingTogglesState(true);
-    playButton->setButtonText("Play");
-    playButton->addListener(this);
-    playButton->setColour(TextButton::buttonColourId, Colours::wheat);
-    playButton->setColour(TextButton::buttonOnColourId, Colours::red);
-    playButton->setEnabled(false);
-    playButton->setAlpha(0.5);
+    addAndMakeVisible(&playButton);
+    playButton.setClickingTogglesState(true);
+    playButton.setButtonText("Play");
+    playButton.addListener(this);
+    playButton.setColour(TextButton::buttonColourId, Colours::wheat);
+    playButton.setColour(TextButton::buttonOnColourId, Colours::red);
+    playButton.setEnabled(false);
+    playButton.setAlpha(0.5);
     
-    addAndMakeVisible(loadImageButton = new TextButton());
-    loadImageButton->setButtonText("Load Image");
-    loadImageButton->addListener(this);
-    loadImageButton->setColour(TextButton::buttonColourId, Colours::wheat);
+    addAndMakeVisible(&loadImageButton);
+    loadImageButton.setButtonText("Load Image");
+    loadImageButton.addListener(this);
+    loadImageButton.setColour(TextButton::buttonColourId, Colours::wheat);
     
-    addAndMakeVisible(fileNameLabel = new Label());
-    fileNameLabel->setColour(Label::textColourId, Colours::wheat);
-    fileNameLabel->setJustificationType(Justification::centred);
+    addAndMakeVisible(&fileNameLabel);
+    fileNameLabel.setColour(Label::textColourId, Colours::wheat);
+    fileNameLabel.setJustificationType(Justification::centred);
     //fileNameLabel->setText("/Users/Liam/Pictures/300 Nature and City Full HD Wallpapers 1920 X 1080/Wallpapers/(11).jpg", dontSendNotification);
     
     
@@ -59,16 +59,16 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
-    imageComponent->setBounds(0, 0, getWidth(), getHeight() - 60);
+    imageComponent.setBounds(0, 0, getWidth(), getHeight() - 60);
     
-    loadImageButton->setBounds((getWidth()/2) - 110, getHeight() - 50, 100, 40);
-    playButton->setBounds((getWidth()/2) +10, getHeight() - 50, 100, 40);
-    fileNameLabel->setBounds(0, getHeight()-90, getWidth(), 20);
+    loadImageButton.setBounds((getWidth()/2) - 110, getHeight() - 50, 100, 40);
+    playButton.setBounds((getWidth()/2) +10, getHeight() - 50, 100, 40);
+    fileNameLabel.setBounds(0, getHeight()-90, getWidth(), 20);
 }
 
 void MainContentComponent::buttonClicked (Button *button)
 {
-    if (button == playButton)
+    if (button == &playButton)
     {
         if (button->getToggleState())
         {
@@ -86,10 +86,10 @@ void MainContentComponent::buttonClicked (Button *button)
         
     } //if (button == playButton)
     
-    else if (button == loadImageButton)
+    else if (button == &loadImageButton)
     {
-        playButton->setEnabled(false);
-        playButton->setAlpha(0.5);
+        playButton.setEnabled(false);
+        playButton.setAlpha(0.5);
         
         FileChooser myChooser ("Please select an image to load...",
                                File("/Users/Liam/Desktop/Images"),
@@ -98,14 +98,14 @@ void MainContentComponent::buttonClicked (Button *button)
         if (myChooser.browseForFileToOpen())
         {
             image = ImageCache::getFromFile(myChooser.getResult());
-            imageComponent->setImage(image);
-            fileNameLabel->setText(myChooser.getResult().getFullPathName(), dontSendNotification);
+            imageComponent.setImage(image);
+            fileNameLabel.setText(myChooser.getResult().getFullPathName(), dontSendNotification);
             
             
             //stop the currently playing sequence
             midiGenerator->stopThread(500);
-            playButton->setToggleState(false, dontSendNotification);
-            playButton->setButtonText("Play");
+            playButton.setToggleState(false, dontSendNotification);
+            playButton.setButtonText("Play");
             
             //get colour data from new image and generate sequence data from it
             analyseImage();
@@ -113,8 +113,8 @@ void MainContentComponent::buttonClicked (Button *button)
         
         if (!image.isNull())
         {
-            playButton->setEnabled(true);
-            playButton->setAlpha(1.0);
+            playButton.setEnabled(true);
+            playButton.setAlpha(1.0);
         }
     }
 }
