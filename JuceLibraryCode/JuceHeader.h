@@ -49,7 +49,7 @@ namespace ProjectInfo
 {
     const char* const  projectName    = "Shuttertone";
     const char* const  companyName    = "LTML";
-    const char* const  versionString  = "1.0.0";
-    const int          versionNumber  = 0x10000;
+    const char* const  versionString  = "1.1.0";
+    const int          versionNumber  = 0x10100;
 }
 #endif

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="bmERS7" name="Shuttertone" projectType="guiapp" version="1.0.0"
+<JUCERPROJECT id="bmERS7" name="Shuttertone" projectType="guiapp" version="1.1.0"
               bundleIdentifier="com.glimmeraudio.shuttertone" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="LTML" companyWebsite="http://liamtmlacey.com"
               companyEmail="liamlacey@hotmail.com">
