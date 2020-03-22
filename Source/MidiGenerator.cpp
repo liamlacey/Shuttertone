@@ -658,8 +658,10 @@ void MidiGenerator::setMidiOutputDevice (int deviceListIndex)
     
     if (deviceListIndex == virtualMidiOuputDeviceIndex)
     {
+#if JUCE_MAC || JUCE_LINUX || JUCE_IOS
         //Create a virtual MIDI output device
         midiOutputDevice = MidiOutput::createNewDevice("Shuttertone App");
+#endif
     }
     else
     {
